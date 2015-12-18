@@ -1,0 +1,18 @@
+<h1>Hey, that used to be a Wawa!</h1>
+
+<p>
+	Wawa Markets have been around for decades now. Long enough that many of them have come and gone over the years, leaving their distinctive Wawa storefront behind. A Notwa is one of those 'used-to-be-a-wawa's. Once you start seeing them, you'll see them everywhere!
+</p>
+
+<p>
+	Sign up to add one we've missed!
+</p>
+
+<% if current_user %>
+	<%= link_to "log out", destroy_user_session_path, method: :delete %>
+<% else %>
+	<%= link_to "log in", user_session_path %>
+	<%= link_to "sign up", new_user_registration_path %>
+<% end %>
+
+

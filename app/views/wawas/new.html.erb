@@ -1,0 +1,47 @@
+<h1>What? One's missing from our database? Fix that!</h1>
+
+<p>
+	All you need to do to add a new Notwa to our site is to submit a photo of it. Don't worry if you don't have any more information than that; we'll help you find it!
+</p>
+
+<% puts "------------------------------------ params user_id is #{params[:user_id]}" %>
+
+<%= form_for @wawa do |f| %>
+	<hr>
+	<p>
+		<%= f.hidden_field :user_id, value: params[:user_id] %>
+		<%= hidden_field_tag 'selected', 'none'  %>
+
+		<%=f.label :prime_photo, "Upload A Picture of It" %>
+		<%= f.file_field :prime_photo %>
+	</p><hr><p>
+	<h2>Optional Information</h2>
+	<hr>
+	</p><p>
+		<%=f.label :lat, 'GPS Latitude/Longitude' %>
+		<%=f.text_field :lat %>/
+		<%= f.text_field :long %>
+	</p><p>
+		<%=f.label :street1 %>
+		<%=f.text_field :street1 %>
+
+		<%=f.label :street2 %>
+		<%=f.text_field :street2 %>
+	</p><p>
+		<%=f.label :City %>
+		<%=f.text_field :city %>
+
+		<%=f.label :State %>
+		<%=f.text_field :state %>
+
+		<%=f.label :Zip %>
+		<%=f.text_field :zip %>
+	</p><p>
+		<%=f.label :info, 'Additional Info:' %>
+	</p><p>
+		<%= f.text_area :info, size: '50x20' %>
+	</p><p>
+		<%= f.submit :Add! %>
+	</p>
+
+<% end %>

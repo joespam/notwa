@@ -1,0 +1,17 @@
+<h1>Individual Show Wawa Page</h1>
+
+	<div class="profileBox">
+		<% if @wawa.prime_photo.exists? %>
+			<%= image_tag @wawa.prime_photo.url %>
+		<% end %>
+	</div>
+
+	<% if @comments %>
+		<% @comments.each do |comment| %>
+			<div = class="profileBox">
+				<% # need to put the comments user here. Make a convenience function to get the comment's user %>
+				<%= @comment.body %>
+			</div>
+		<% end %>
+	<% end %>
+

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <title>Notwa</title>
+	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	  <%= csrf_meta_tags %>
+	</head>
+	<body>
+
+		<nav class="nav">
+		  <ul>
+			<li><%= link_to "home", home_path %></li>
+		  	<% if current_user %>
+				<li><%= link_to "log out", destroy_user_session_path %></li>
+				<li><%= link_to "change profile", edit_user_profile_path(current_user) %></li>
+				<li><%= link_to "add a wawa", new_wawa_path(:user_id => current_user) %></li>
+				<li><%= link_to "fix a wawa" %></li>
+				<li><%= link_to "map" %></li>
+		   <% else %>
+				<li><%= link_to "log in", user_session_path %></li>
+				<li><%= link_to "sign up", new_user_session_path %></li>
+		   <% end %>
+		  </ul>
+		</nav>
+
+		<% if notice %>
+		  <p class="alert alert-success"><%= notice %></p>
+		<% end %>
+		<% if alert %>
+		  <p class="alert alert-danger"><%= alert %></p>
+		<% end %>
+
+		<%= yield %>
+
+	</body>
+</html>

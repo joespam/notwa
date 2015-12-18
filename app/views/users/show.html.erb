@@ -1,0 +1,26 @@
+<h1>Now showing user <%= "#{current_user.id}" %></h1>
+
+<div class="profileBox">
+	<p>
+		<%  if @profile.avatar %>
+			<%=  image_tag @profile.avatar.url(:thumb) %>
+		<% end %>
+		<%= "#{@profile.username}" %>
+	</p><p>
+		First Name: <%= "#{@profile.fname}" %>
+	</p><p>
+		Last Name: <%= "#{@profile.lname}" %>
+	</p><p>
+		Street: <%= "#{@profile.street1}" %>
+	</p>
+	<% if @profile.street2 && @profile.street2 != '' %>
+		<p>
+			Street 2: <%= "#{@profile.street2}" %>
+		</p>
+	<% end %>
+	<p>
+		City, State Zip: <%= "#{@profile.city}" %>, <%= "#{@profile.state}" %> <%= "#{@profile.zip}" %>
+	</p><p>
+		Country: <%= "#{@profile.country}" %>
+	</p>
+</div>

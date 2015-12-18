@@ -1,0 +1,33 @@
+<%= form_for @profile, :url => users_path, :html => { :multipart => true } do |f| %>
+	<p>
+		<%=f.label :Username %>
+		<%=f.text_field :username %>
+	</p><p>
+		<%=f.label :Avatar %>
+		<%= f.file_field :avatar %>
+	</p><p>
+		<%=f.label :First %>
+		<%=f.text_field :fname %>
+
+		<%=f.label :Last %>
+		<%=f.text_field :lname %>
+	</p><p>
+		<%= f.submit :change %>
+	</p><p>
+		<%=f.label :street1 %>
+		<%=f.text_field :street1 %>
+
+		<%=f.label :street2 %>
+		<%=f.text_field :street2 %>
+	</p><p>
+		<%=f.label :City %>
+		<%=f.text_field :city %>
+
+		<%=f.label :State %>
+		<%=f.text_field :state %>
+
+		<%=f.label :Zip %>
+		<%=f.text_field :zip %>
+	</p>
+
+<% end %>
