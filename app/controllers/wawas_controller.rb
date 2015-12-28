@@ -1,5 +1,33 @@
 class WawasController < ApplicationController
 
+	# if userid corresponds to an existing user,
+	# return that user's username, "" otherwise
+	#
+	def comments wawaid
+		wawa = Wawa.find wawaid
+		com = []
+		if wawa
+			com = wawa.comments
+		end
+		return com
+	end
+
+	# return the username of the author of the 
+	# submitted comment
+	#
+	def comment_username comment
+		user = User.find comment.user_id
+		username = ""
+		if user && user.profile
+			username = user.profile.username
+		end	
+		return username
+	end
+
+	helper_method :comments, :comment_username
+	
+	#------------------------------
+
 	def create
 
 		puts params
@@ -22,6 +50,10 @@ class WawasController < ApplicationController
 	end
 
 	def index
+		# this array should be sorted, or queried from the DB
+		# in order of most recently added
+		#
+		@wawas = Wawa.all
 	end
 
 	def new

@@ -6,18 +6,20 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-user = User.create(email:"joe.spampinato@gmail.com", password:"12345678",admin: true)
-prof = Profile.create(username: "joespam",fname: "Joe",lname: "Spampinato",street1: "330 Prussian Lane",street2: "",city: "Wayne",state: "PA",zip: "19087",country: "USA")
-user.profile = prof
-
-user1 = User.create(email:"jcspampinato@gmail.com", password:"12345678",admin: true)
-prof1 = Profile.create(username: "josephus",fname: "Joe",lname: "Spampinato",street1: "200 Lincoln Ave",street2: "STE 116",city: "Phoenixville",state: "PA",zip: "19460",country: "USA")
+user1 = User.create(email:"joe.spampinato@gmail.com", password:"12345678",admin: true)
+prof1 = Profile.create(username: "joespam",fname: "Joe",lname: "Spampinato",street1: "330 Prussian Lane",street2: "",city: "Wayne",state: "PA",zip: "19087",country: "USA")
 user1.profile = prof1
+
+user2 = User.create(email:"jcspampinato@gmail.com", password:"12345678",admin: true)
+prof2 = Profile.create(username: "josephus",fname: "Joe",lname: "Spampinato",street1: "200 Lincoln Ave",street2: "STE 116",city: "Phoenixville",state: "PA",zip: "19460",country: "USA")
+user2.profile = prof1
 
 # for testing detection of address from lat long
 wawa1 = Wawa.create(lat: 29.951, long: -90.081)
+wawa.user = user1
 # for testing detection of lat long from address
 wawa2 = Wawa.create( street1: "1500 Sugar Bowl Dr", city: "New Orleans", state: "LA", zip: "70112")
+wawa.user = user2
 
 wawa1.comments << Comment.create(user_id: user.id, wawa_id: wawa1.id, body: "I used to buy pretzels here!")
 wawa1.comments <<  Comment.create(user_id: user1.id, wawa_id: wawa1.id, body: "I totally did too!")

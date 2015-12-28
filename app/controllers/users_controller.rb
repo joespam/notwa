@@ -1,5 +1,20 @@
 class UsersController < ApplicationController
 
+	# if userid corresponds to an existing user,
+	# return that user's username, "" otherwise
+	#
+	def username userid
+		user = User.find userid
+		retval = ""
+		if user
+			retval = user.username
+		end
+		return retval
+	end
+
+	helper_method :username
+	#------------------------------
+
 	def create
 		# this code is not getting called. 
 		puts "----------------"

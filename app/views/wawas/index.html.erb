@@ -5,14 +5,18 @@
 </p>
 
 <p>
-	Sign up to add one we've missed!
+  	<% if !current_user %>
+		Sign up to add one we've missed!
+	<% end %>
 </p>
 
-<% if current_user %>
-	<%= link_to "log out", destroy_user_session_path, method: :delete %>
-<% else %>
-	<%= link_to "log in", user_session_path %>
-	<%= link_to "sign up", new_user_registration_path %>
+<hr>
+<% @wawas.each do |wawa|%>
+	<%  if wawa.prime_photo %>
+		<%=  image_tag wawa.prime_photo(:medium) %>
+	<% end %>
+	<%= "submitted by username [#{wawa.user}] " %>
+	<%= "[#{wawa.city}], [#{wawa.state}]" %>
+	<hr>
 <% end %>
-
 

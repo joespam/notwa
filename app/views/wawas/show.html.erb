@@ -8,9 +8,9 @@
 
 	<% if @comments %>
 		<% @comments.each do |comment| %>
-			<div = class="profileBox">
-				<% # need to put the comments user here. Make a convenience function to get the comment's user %>
-				<%= @comment.body %>
+			<div class="profileBox">
+				<%= comment_username comment %>
+				<%= comment.body %>
 			</div>
 		<% end %>
 	<% end %>
