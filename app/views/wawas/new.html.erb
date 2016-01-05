@@ -15,6 +15,10 @@
 		<%=f.label :prime_photo, "Upload A Picture of It" %>
 		<%= f.file_field :prime_photo %>
 	</p><hr><p>
+
+<h1>Choose on the map where this wawa is located</h1>
+<div id="gmap"></div>
+
 	<h2>Optional Information</h2>
 	<hr>
 	</p><p>
@@ -45,3 +49,22 @@
 	</p>
 
 <% end %>
+
+<script type="text/javascript">
+	handler = Gmaps.build('Google');
+	handler.buildMap({
+	    provider: {
+	      disableDefaultUI: false
+	      // pass in other Google Maps API options here
+	    },
+	    internal: {
+	      id: 'gmap'
+	    }
+	  },
+	  function(){
+			markers = handler.addMarkers(<%=raw @hash.to_json %>);
+	    handler.bounds.extendWith(markers);
+	    handler.fitMapToBounds();
+	  }
+	);
+</script>

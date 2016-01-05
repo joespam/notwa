@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     resource :profile
   end
 
+  root to: "wawas#index"
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

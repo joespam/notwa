@@ -30,6 +30,8 @@ gem 'devise'
 gem 'exifr', :git => 'git://github.com/picuous/exifr.git'
 # geocoder for lat long to street address
 gem 'geocoder'
+# integrate google maps
+gem 'gmaps4rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

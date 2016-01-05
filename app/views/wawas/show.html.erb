@@ -1,10 +1,19 @@
 <h1>Individual Show Wawa Page</h1>
+	<% if current_user.admin %>
+		<li><%= link_to "modify wawa", edit_wawa_path(@wawa.id) %></li>
+	<% end %>
+
+		<div id="gmap">
+
+		</div>
 
 	<div class="profileBox">
 		<% if @wawa.prime_photo.exists? %>
-			<%= image_tag @wawa.prime_photo.url %>
+			<%= image_tag @wawa.prime_photo.url(:medium) %>
+			<% #link_to image_tag(@post.image.url(:medium)), @post.image.url %>
 		<% end %>
 	</div>
+
 
 	<% if @comments %>
 		<% @comments.each do |comment| %>
@@ -14,4 +23,23 @@
 			</div>
 		<% end %>
 	<% end %>
+
+	<script type="text/javascript">
+		handler = Gmaps.build('Google');
+		handler.buildMap({
+				provider: {
+					disableDefaultUI: false
+					// pass in other Google Maps API options here
+				},
+				internal: {
+					id: 'gmap'
+				}
+			},
+			function(){
+				markers = handler.addMarkers(<%=raw @hash.to_json %>);
+				handler.bounds.extendWith(markers);
+				handler.fitMapToBounds();
+			}
+		);
+	</script>
 

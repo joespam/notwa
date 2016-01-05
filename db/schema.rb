@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151216164305) do
+ActiveRecord::Schema.define(version: 20160105215716) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 20151216164305) do
 
   create_table "profiles", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "username"
     t.string   "fname"
     t.string   "lname"
     t.string   "street1"
@@ -69,10 +68,12 @@ ActiveRecord::Schema.define(version: 20151216164305) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "username"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["username"], name: "index_users_on_username", unique: true
 
   create_table "wawas", force: :cascade do |t|
     t.decimal  "lat",                      precision: 10, scale: 6

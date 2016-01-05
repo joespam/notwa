@@ -1,11 +1,11 @@
-<h1>Now showing user <%= "#{current_user.id}" %></h1>
+<h1>Now showing user <%= "#{current_user.username}" %></h1>
 
 <div class="profileBox">
 	<p>
 		<%  if @profile.avatar %>
 			<%=  image_tag @profile.avatar.url(:thumb) %>
 		<% end %>
-		<%= "#{@profile.username}" %>
+		<%= "#{current_user.username}" %>
 	</p><p>
 		First Name: <%= "#{@profile.fname}" %>
 	</p><p>

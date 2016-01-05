@@ -9,14 +9,36 @@
 		Sign up to add one we've missed!
 	<% end %>
 </p>
+<div id="gmap">
 
+</div>
 <hr>
 <% @wawas.each do |wawa|%>
-	<%  if wawa.prime_photo %>
-		<%=  image_tag wawa.prime_photo(:medium) %>
+
+	<%  if wawa.prime_photo.exists? %>
+		<%=  image_tag wawa.prime_photo.url(:thumb) %>
 	<% end %>
 	<%= "submitted by username [#{wawa.user}] " %>
 	<%= "[#{wawa.city}], [#{wawa.state}]" %>
+	<li><%= link_to "fix a wawa", edit_wawa_path(wawa.id) %></li>
 	<hr>
 <% end %>
 
+<script type="text/javascript">
+	handler = Gmaps.build('Google');
+	handler.buildMap({
+	    provider: {
+	      disableDefaultUI: false
+	      // pass in other Google Maps API options here
+	    },
+	    internal: {
+	      id: 'gmap'
+	    }
+	  },
+	  function(){
+			markers = handler.addMarkers(<%=raw @hash.to_json %>);
+	    handler.bounds.extendWith(markers);
+	    handler.fitMapToBounds();
+	  }
+	);
+</script>

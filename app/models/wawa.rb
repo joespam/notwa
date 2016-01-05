@@ -36,7 +36,7 @@ class Wawa < ActiveRecord::Base
 		end
 	end
 
-	# extract latlong data from, set the address attributes from that
+	# get  latlong data from, set the address attributes from that
 	#
 	def latlong_to_address
 

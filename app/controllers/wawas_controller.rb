@@ -49,15 +49,47 @@ class WawasController < ApplicationController
 	def destroy
 	end
 
+	def edit
+		# puts "-------------------------"
+		# puts params
+		# puts "-------------------------"
+
+		@wawa = Wawa.find params[:id]
+	end
+
 	def index
 		# this array should be sorted, or queried from the DB
 		# in order of most recently added
 		#
 		@wawas = Wawa.all
+		@hash = Gmaps4rails.build_markers(@wawas) do |wawa, marker|
+		  marker.lat wawa.lat
+		  marker.lng wawa.long
+		end
 	end
 
 	def new
 		@wawa = Wawa.new
+	end
+
+	def update
+		# puts "xxxxxxxxxxxxxxxxxxxxxxxx"
+		# puts "#{params}"
+		# puts "xxxxxxxxxxxxxxxxxxxxxxxx"
+
+		wawa = Wawa.find params[:id]
+		if wawa and wawa.update_attributes wawa_params
+			if wawa.save
+				flash[:notice] = "Wawa updated successfully"
+				redirect_to wawa_path wawa
+			else
+				flash[:alert] = "Updating failed."
+				redirect_to edit_wawa_path wawa
+			end				
+		else
+			flash[:alert] = "Updating failed."
+			redirect_to edit_wawa_path wawa
+		end
 	end
 
 	def show
@@ -66,7 +98,7 @@ class WawasController < ApplicationController
 
 		# check if latitude/longitude is set
 		# 
-		if @wawa.lat.nil? 
+		if @wawa.lat.nil? && @wawa.prime_photo_file_name
 			@wawa.set_latlong_from_pic
 
 			# if lat lon has been set, 
@@ -80,14 +112,23 @@ class WawasController < ApplicationController
 			if @wawa.lat.nil? 
 				# if street address is set and latlon isn't
 				# do a reverse geocode and set latlong
-				address = "#{@wawa.street1}, #{@wawa.city}, #{@wawa.state}, @wawa.zip"
+				address = "#{@wawa.street1}, #{@wawa.city}, #{@wawa.state}, #{@wawa.zip}"
 				location = Geocoder.search( address )
 				if location.length > 0
-					byebug
 					@wawa.lat = location[0].latitude
 					@wawa.long = location[0].longitude
+					@wawa.save
 				end
 			end
+		end
+
+		# now that we know we have a lat long, create a hash so we
+		# can put a marker on the map location
+		wawas = []
+		wawas[0] = @wawa
+		@hash = Gmaps4rails.build_markers(wawas) do |wawa, marker|
+		  marker.lat wawa.lat
+		  marker.lng wawa.long
 		end
 	end
 

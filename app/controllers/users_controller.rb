@@ -3,23 +3,23 @@ class UsersController < ApplicationController
 	# if userid corresponds to an existing user,
 	# return that user's username, "" otherwise
 	#
-	def username userid
-		user = User.find userid
-		retval = ""
-		if user
-			retval = user.username
-		end
-		return retval
-	end
+	# def username userid
+	# 	user = User.find userid
+	# 	retval = ""
+	# 	if user
+	# 		retval = user.username
+	# 	end
+	# 	return retval
+	# end
 
-	helper_method :username
+	# helper_method :username
 	#------------------------------
 
 	def create
 		# this code is not getting called. 
-		puts "----------------"
-		puts params
-		puts "----------------"
+		# puts "----------------"
+		# puts params
+		# puts "----------------"
 		@user = User.find(params[:id])
 		if @user
 			puts "user exists"
@@ -29,26 +29,35 @@ class UsersController < ApplicationController
 	def edit
 		# @user = User.find(params[:id])
 		# @profile = @user.profile
-		puts "--------------------------"
+		# puts "--------------------------"
 	end
 
 	def index
 	end
 
 	def show
-		# get user
-		#
-		@user = User.find(params[:id])
-		# get profile, or create it and
-		# add it to user if it doesn't exist
-		#
-		@profile = nil
-		if @user.profile
-			@profile = @user.profile
-		else
-			@profile = Profile.new
-			@user.profile = @profile
-		end
+
+		# the following if statement is a kludge, but 
+		# for the moment, I can't figure out why after_sign_out
+		# is not getting called after sign out,
+		# so I'm manually redirecting if there is no current_user
+		# if current_user
+			# get user
+			#
+			@user = User.find(params[:id])
+			# get profile, or create it and
+			# add it to user if it doesn't exist
+			#
+			@profile = nil
+			if @user.profile
+				@profile = @user.profile
+			else
+				@profile = Profile.new
+				@user.profile = @profile
+			end
+		# else
+		# 	redirect_to home_path
+		# end
 
 	end
 

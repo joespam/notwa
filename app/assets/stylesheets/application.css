@@ -37,3 +37,11 @@
 	border: 10px ridge gray;
 	background-color: gray;
 }
+
+/*
+ *  styling for google map element
+ */
+#gmap {
+	width: 800px;
+	height: 400px;
+}

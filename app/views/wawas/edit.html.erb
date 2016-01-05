@@ -1,1 +1,42 @@
 <h1>Eddita Wawa</h1>
+
+<% if current_user %>
+	<% if current_user.admin %>
+
+		<%= form_for @wawa, :url => wawa_path(@wawa), :html => { :multipart => true } do |f| %>
+			<p>
+			modify this to check for existence of file: show the file if exists and change it if needed.
+				<%=f.label :Prime_Photo %>
+				<% if @wawa.prime_photo.exists? %>
+					<%= image_tag @wawa.prime_photo.url(:medium) %>
+					<% #link_to image_tag(@post.image.url(:medium)), @post.image.url %>
+				<% end %>		
+				<%= f.file_field :prime_photo %>
+			</p><p>
+				<%=f.label :Latitude %>
+				<%=f.text_field :lat %>
+
+				<%=f.label :Longitude %>
+				<%=f.text_field :long %>
+			</p><p>
+				<%=f.label :street1 %>
+				<%=f.text_field :street1 %>
+
+				<%=f.label :street2 %>
+				<%=f.text_field :street2 %>
+			</p><p>
+				<%=f.label :City %>
+				<%=f.text_field :city %>
+
+				<%=f.label :State %>
+				<%=f.text_field :state %>
+
+				<%=f.label :Zip %>
+				<%=f.text_field :zip %>
+			</p><p>
+				<%= f.submit :change %>
+			</p>
+		<% end %>
+
+	<% end %>
+<% end %>
