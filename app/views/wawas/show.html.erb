@@ -3,14 +3,11 @@
 		<li><%= link_to "modify wawa", edit_wawa_path(@wawa.id) %></li>
 	<% end %>
 
-		<div id="gmap">
-
-		</div>
+	<div id="gmap"></div>
 
 	<div class="profileBox">
 		<% if @wawa.prime_photo.exists? %>
 			<%= image_tag @wawa.prime_photo.url(:medium) %>
-			<% #link_to image_tag(@post.image.url(:medium)), @post.image.url %>
 		<% end %>
 	</div>
 
@@ -31,7 +28,7 @@
 		handler = Gmaps.build('Google');
 		handler.buildMap({
 				provider: {
-					disableDefaultUI: false
+					disableDefaultUI: false,
 					// pass in other Google Maps API options here
 				},
 				internal: {
@@ -42,6 +39,7 @@
 				markers = handler.addMarkers(<%=raw @hash.to_json %>);
 				handler.bounds.extendWith(markers);
 				handler.fitMapToBounds();
+				handler.getMap().setZoom(17);
 			}
 		);
 	</script>

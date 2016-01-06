@@ -73,26 +73,6 @@ class WawasController < ApplicationController
 		@wawa = Wawa.new
 	end
 
-	def update
-		# puts "xxxxxxxxxxxxxxxxxxxxxxxx"
-		# puts "#{params}"
-		# puts "xxxxxxxxxxxxxxxxxxxxxxxx"
-
-		wawa = Wawa.find params[:id]
-		if wawa and wawa.update_attributes wawa_params
-			if wawa.save
-				flash[:notice] = "Wawa updated successfully"
-				redirect_to wawa_path wawa
-			else
-				flash[:alert] = "Updating failed."
-				redirect_to edit_wawa_path wawa
-			end				
-		else
-			flash[:alert] = "Updating failed."
-			redirect_to edit_wawa_path wawa
-		end
-	end
-
 	def show
 		@wawa = Wawa.find params[:id]
 		@comments = @wawa.comments
@@ -109,7 +89,7 @@ class WawasController < ApplicationController
 			end
 		end
 
-		if !@wawa.street1.nil? || @wawa.street1 == "" 
+		if !@wawa.street1.nil? || @wawa.street1 != "" 
 			if @wawa.lat.nil? 
 				# if street address is set and latlon isn't
 				# do a reverse geocode and set latlong
@@ -130,6 +110,31 @@ class WawasController < ApplicationController
 		@hash = Gmaps4rails.build_markers(wawas) do |wawa, marker|
 		  marker.lat wawa.lat
 		  marker.lng wawa.long
+		end
+	end
+
+	def update
+
+		wawa = Wawa.find params[:id]
+		if wawa and wawa.update_attributes wawa_params
+			# change the street address just in case lat long changed
+			if wawa.save
+				wawa.latlong_to_address
+
+				if wawa.save
+					flash[:notice] = "Wawa updated successfully"
+					redirect_to wawa_path wawa
+				else
+					flash[:alert] = "Updating failed."
+					redirect_to edit_wawa_path wawa
+				end		
+			else
+				flash[:alert] = "Updating failed."
+				redirect_to edit_wawa_path wawa
+			end			
+		else
+			flash[:alert] = "Updating failed."
+			redirect_to edit_wawa_path wawa
 		end
 	end
 
