@@ -16,7 +16,9 @@
 <% @wawas.each do |wawa|%>
 
 	<%  if wawa.prime_photo.exists? %>
-		<%=  image_tag wawa.prime_photo.url(:thumb) %>
+		<%=  link_to "#{image_tag wawa.prime_photo.url(:thumb)}".html_safe, wawa_path(wawa.id) %>
+	<% else %>
+		<%= link_to "wawa page", wawa_path(wawa.id) %>
 	<% end %>
 	<%= "submitted by username [#{wawa.user.username}] " %>
 	<%= "[#{wawa.city}], [#{wawa.state}]" %>
