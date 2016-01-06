@@ -18,9 +18,11 @@
 	<%  if wawa.prime_photo.exists? %>
 		<%=  image_tag wawa.prime_photo.url(:thumb) %>
 	<% end %>
-	<%= "submitted by username [#{wawa.user}] " %>
+	<%= "submitted by username [#{wawa.user.username}] " %>
 	<%= "[#{wawa.city}], [#{wawa.state}]" %>
-	<li><%= link_to "fix a wawa", edit_wawa_path(wawa.id) %></li>
+	<% if current_user && current_user == wawa.user || current_user.admin %>
+		<li><%= link_to "Edit wawa", edit_wawa_path(wawa.id) %></li>
+	<% end %>
 	<hr>
 <% end %>
 
@@ -37,8 +39,8 @@
 	  },
 	  function(){
 			markers = handler.addMarkers(<%=raw @hash.to_json %>);
-	    handler.bounds.extendWith(markers);
-	    handler.fitMapToBounds();
-	  }
+			handler.bounds.extendWith(markers);
+			handler.fitMapToBounds();
+		}
 	);
 </script>

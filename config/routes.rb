@@ -18,7 +18,9 @@ Rails.application.routes.draw do
     resource :profile
   end
 
-  root to: "wawas#index"
+  # the following 2 routes are attempts to get logout working.
+  # root to: "wawas#index"
+  # delete 'logout' => 'sessions#destroy', as: :logout
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

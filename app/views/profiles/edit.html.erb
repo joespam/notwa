@@ -1,6 +1,11 @@
 <%= form_for @profile, url: user_profile_path(@user), :html => { :multipart => true } do |f| %>
 	<p>
-		<%=f.label :Avatar %>
+		<%  if @profile.avatar %>
+			<%=  image_tag @profile.avatar.url(:thumb) %>
+			<%=f.label :Avatar, "Change Avatar" %>
+		<% else %>
+			<%=f.label :Avatar %>
+		<% end %>
 		<%= f.file_field :avatar %>
 	</p><p>
 		<%=f.label :First %>
@@ -24,6 +29,9 @@
 		<%=f.label :Zip %>
 		<%=f.text_field :zip %>
 	</p><p>
+		<%=f.label :Country %>
+		<%=f.text_field :country %>
+	</p>
 		<%= f.submit :change %>
 	</p>
 
