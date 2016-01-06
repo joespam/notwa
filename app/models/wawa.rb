@@ -46,13 +46,16 @@ class Wawa < ActiveRecord::Base
 				# sample address is 
 				# "769 Lasalle St, New Orleans, LA 70113, USA" 
 				# 
-				address.gsub(/\s+/, "")
 				fields = address.split ','
 				if fields.length == 4
+					# need to split up the state and zip, at index 2
+					statezip = fields[2].split " "
+
 					self.street1 = fields[0]
 					self.city = fields[1]
-					self.state = fields[2]
-					self.zip = fields[4]
+
+					self.state = statezip[0]
+					self.zip = statezip[1]
 				else
 					flash[:notice] = "Please set the Notwa address to #{address}"
 				end
