@@ -4,8 +4,6 @@
 	All you need to do to add a new Notwa to our site is to submit a photo of it. Don't worry if you don't have any more information than that; we'll help you find it!
 </p>
 
-<% puts "------------------------------------ params user_id is #{params[:user_id]}" %>
-
 <%= form_for @wawa do |f| %>
 	<hr>
 	<p>
@@ -16,7 +14,7 @@
 		<%= f.file_field :prime_photo %>
 	</p><hr><p>
 
-<h1>Choose on the map where this wawa is located</h1>
+<h1>Drag the Marker to this Wawa's Location</h1>
 <div id="gmap"></div>
 
 	<h2>Optional Information</h2>
@@ -50,21 +48,40 @@
 
 <% end %>
 
-<script type="text/javascript">
-	handler = Gmaps.build('Google');
-	handler.buildMap({
-	    provider: {
-	      disableDefaultUI: false
-	      // pass in other Google Maps API options here
-	    },
-	    internal: {
-	      id: 'gmap'
-	    }
-	  },
-	  function(){
-			markers = handler.addMarkers(<%=raw @hash.to_json %>);
-	    handler.bounds.extendWith(markers);
-	    handler.fitMapToBounds();
-	  }
-	);
-</script>
+ <script type="text/javascript">
+
+	var myZoom = 8;
+	var myMarkerIsDraggable = true;
+	var defaultLat = 39.9523400;
+	var defaultLng = -75.1637900;
+	var myCoordsLength = 8;
+
+	var map = new google.maps.Map(document.getElementById('gmap'), {
+		zoom: myZoom,
+		center: new google.maps.LatLng(defaultLat, defaultLng),
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	});
+
+	// creates a draggable marker to the given coords
+
+	var myMarker = new google.maps.Marker({
+		position: new google.maps.LatLng(defaultLat, defaultLng),
+		draggable: myMarkerIsDraggable
+	});
+
+	// adds a listener to the marker
+	// gets the coords when drag event ends<br />
+	// then updates the input with the new coords<br />
+
+	google.maps.event.addListener(myMarker, 'dragend', function(evt){
+		document.getElementById('wawa_lat').value = evt.latLng.lat().toFixed(myCoordsLength);
+		document.getElementById('wawa_long').value = evt.latLng.lng().toFixed(myCoordsLength);
+	});
+
+	// centers the map on markers coords
+	map.setCenter(myMarker.position);
+
+	// adds the marker on the map
+	myMarker.setMap(map);
+
+ </script>

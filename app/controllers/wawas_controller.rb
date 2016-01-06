@@ -18,8 +18,8 @@ class WawasController < ApplicationController
 	def comment_username comment
 		user = User.find comment.user_id
 		username = ""
-		if user && user.profile
-			username = user.profile.username
+		if user && user.username
+			username = user.username
 		end	
 		return username
 	end
@@ -55,6 +55,7 @@ class WawasController < ApplicationController
 		# puts "-------------------------"
 
 		@wawa = Wawa.find params[:id]
+		@user = @wawa.user
 	end
 
 	def index

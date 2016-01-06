@@ -41,6 +41,9 @@ class UsersController < ApplicationController
 		# for the moment, I can't figure out why after_sign_out
 		# is not getting called after sign out,
 		# so I'm manually redirecting if there is no current_user
+		# except that doesn't work, because somehow there is still a current
+		# user when we end up in here after following destroy_user_session_path,
+		# so IDK WTF
 		# if current_user
 			# get user
 			#
