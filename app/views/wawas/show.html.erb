@@ -13,17 +13,52 @@
 
 	<div class="profileBox">
 		<% # make a link to a function that enters comments%>
+		<p><%= link_to "Comment", "#add_comment_lb", class: "fancybox" %></p>
 	</div>
 
 	<% if @comments %>
 		<% @comments.each do |comment| %>
 			<div class="profileBox">
-				<%= comment_username comment %>
-				<%= comment.body %>
+				<p><%= comment_username comment %></p>
+				<p><%= comment.body %></p>
+				<% if current_user.id == comment.user_id || current_user.admin %>
+					<p><%= link_to "Edit", "#edit_comment_#{comment.id}_lb", class: "fancybox" %></p>
+
+					<!-- lightbox for editing this comment -->
+					<div style="display:none;">
+						<div id=<%="edit_comment_#{comment.id}_lb"%> >
+							<%= form_for comment, url: update_comment_path(comment.id), html: {method: :patch} do |f| %>
+								<p>
+									<%= f.label :body, "Edit Your Comment!" %>
+									<%= f.text_area :body, size: '50x20' %>
+								</p><p>
+									<%= f.submit "Edit Comment!" %>
+								</p>
+							<% end %>
+						</div>
+					</div>
+
+				<% end %>
 			</div>
 		<% end %>
 	<% end %>
 
+
+	<!-- lightbox for adding new comments -->
+	<div style="display:none;">
+		<div id="add_comment_lb">
+			<%= form_for @comment, url: comment_path(:user_id => current_user.id, :wawa_id => @wawa.id), html: {method: :post} do |f| %>
+				<p>
+					<%= f.label :body, "Tell Us About It!" %>
+					<%= f.text_area :body, size: '50x20' %>
+				</p><p>
+					<%= f.submit "Comment!" %>
+				</p>
+			<% end %>
+		</div>
+	</div>
+
+	<!-- script for adding google map -->
 	<script type="text/javascript">
 		handler = Gmaps.build('Google');
 		handler.buildMap({
