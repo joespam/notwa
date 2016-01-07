@@ -22,7 +22,7 @@
 	<% end %>
 	<%= "submitted by username [#{wawa.user.username}] " %>
 	<%= "[#{wawa.city}], [#{wawa.state}]" %>
-	<% if current_user && current_user == wawa.user || current_user.admin %>
+	<% if current_user && current_user == wawa.user || current_user && current_user.admin %>
 		<li><%= link_to "Edit wawa", edit_wawa_path(wawa.id) %></li>
 	<% end %>
 	<hr>
