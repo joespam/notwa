@@ -94,4 +94,11 @@
 			handler.fitMapToBounds();
 		}
 	);
+	// allow map to responsively resize
+	map = handler.getMap()
+	google.maps.event.addDomListener(window, "resize", function() {
+		 var center = map.getCenter();
+		 google.maps.event.trigger(map, "resize");
+		 map.setCenter(center); 
+	});
 </script>
