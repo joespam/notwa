@@ -34,6 +34,8 @@ gem 'geocoder'
 gem 'gmaps4rails'
 # fancybox is a lightbox alternative
 gem 'fancybox-rails'
+# bootstrap for layout
+gem 'bootstrap-sass'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
