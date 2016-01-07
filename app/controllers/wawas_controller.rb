@@ -76,6 +76,8 @@ class WawasController < ApplicationController
 	def show
 		@wawa = Wawa.find params[:id]
 		@comments = @wawa.comments
+		@comment = Comment.new
+		@comments_hash = Hash[*@comments.map{ |c| [c.id, c.body] }.flatten]
 
 		# check if latitude/longitude is set
 		# 

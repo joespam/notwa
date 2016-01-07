@@ -15,4 +15,9 @@
 //= require turbolinks
 //= require underscore
 //= require gmaps/google
+//= require fancybox
 //= require_tree .
+
+$(document).ready(function() {
+  $("a.fancybox").fancybox();
+});
