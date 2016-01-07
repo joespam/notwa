@@ -1,0 +1,31 @@
+
+ <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+   <div class="container-fluid">
+     <div class="navbar-header">
+       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+         <span class="sr-only">Toggle navigation</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+       </button>
+   <!--     <a class="navbar-brand" href="#">Project name</a> -->
+       <%= link_to "home", home_path, {:class=>"navbar-brand"} %>
+     </div>
+     <div id="navbar" class="navbar-collapse collapse">
+       <ul class="nav navbar-nav navbar-right">
+		  	<% if current_user %>
+				<li><%= link_to "log out", destroy_user_session_path, method: :delete  %></li>
+				<li><%= link_to "change profile", edit_user_profile_path(current_user) %></li>
+				<li><%= link_to "add a wawa", new_wawa_path(:user_id => current_user) %></li>
+				<li><%= link_to "map" %></li>
+		   <% else %>
+				<li><%= link_to "log in", new_user_session_path %></li>
+				<li><%= link_to "sign up", new_user_registration_path %></li>
+		   <% end %>
+       </ul>
+       <form class="navbar-form navbar-right">
+         <input type="text" class="form-control" placeholder="Search...">
+       </form>
+     </div>
+   </div>
+ </nav>

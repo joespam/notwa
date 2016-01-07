@@ -1,26 +1,30 @@
-<h2>Log in</h2>
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :login %><br />
-    <%= f.text_field :login, autofocus: true %>
-  </div>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => "form-signin"}) do |f| %>
+        
+        <h2 class="form-signin-heading">Please Sign In</h2>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+        <%= f.label :login, :class => "sr-only" %>
+        <%= f.text_field :login, autofocus: true, :class => "form-control", :placeholder => "username or email" %>
 
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end -%>
+          <%= f.label :password, :class => "sr-only" %>
+          <%= f.password_field :password, autocomplete: "off", :class => "form-control", :placeholder => "password" %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
+        <% if devise_mapping.rememberable? %>
 
-<%= render "devise/shared/links" %>
+          <div class="checkbox col-md-offset-1">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
+          </div>
+        <% end -%>
+
+          <%= f.submit "Sign in", :class => "btn btn-lg btn-primary btn-block" %>
+
+      <% end %>
+      <br>
+      <%= render "devise/shared/links" %>
+      <br>
+  </div> <!-- col -->
+</div> <!-- row -->
+
