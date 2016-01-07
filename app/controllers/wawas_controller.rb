@@ -64,8 +64,10 @@ class WawasController < ApplicationController
 		#
 		@wawas = Wawa.all
 		@hash = Gmaps4rails.build_markers(@wawas) do |wawa, marker|
-		  marker.lat wawa.lat
-		  marker.lng wawa.long
+			wawa_link = view_context.link_to "show me!", wawa_path(wawa.id)
+			marker.infowindow "<h4><u>#{wawa_link}</u></h4>"
+			marker.lat wawa.lat
+			marker.lng wawa.long
 		end
 	end
 
@@ -77,7 +79,7 @@ class WawasController < ApplicationController
 		@wawa = Wawa.find params[:id]
 		@comments = @wawa.comments
 		@comment = Comment.new
-		@comments_hash = Hash[*@comments.map{ |c| [c.id, c.body] }.flatten]
+		# @comments_hash = Hash[*@comments.map{ |c| [c.id, c.body] }.flatten]
 
 		# check if latitude/longitude is set
 		# 

@@ -36,6 +36,7 @@ gem 'gmaps4rails'
 gem 'fancybox-rails'
 # bootstrap for layout
 gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

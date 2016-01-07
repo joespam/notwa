@@ -1,33 +1,82 @@
-<h1>Hey, that used to be a Wawa!</h1>
+<div class="container">
+	   <div class="blog-header">
+	     <h1 class="blog-title">Notwa!</h1>
+	     <p class="lead blog-description">Hey, that used to be a Wawa!</p>
+	     <% if !current_user %>
+	        <p>Did we miss one? Sign up and add it!</p>
+	     <% end %>
+	   </div>
 
-<p>
-	Wawa Markets have been around for decades now. Long enough that many of them have come and gone over the years, leaving their distinctive Wawa storefront behind. A Notwa is one of those 'used-to-be-a-wawa's. Once you start seeing them, you'll see them everywhere!
-</p>
+	<div class="row">
 
-<p>
-  	<% if !current_user %>
-		Sign up to add one we've missed!
-	<% end %>
-</p>
-<div id="gmap">
+		<div class="col-sm-8 blog-main">
 
-</div>
-<hr>
-<% @wawas.each do |wawa|%>
+			<div class="blog-post">
+			   <div id="gmap"></div>
+			</div>
+			<% @wawas.each do |wawa|%>    
+			   <div class="blog-post">   
+		         <h2 class="blog-post-title"><%= "[#{wawa.city}], [#{wawa.state}] [#{wawa.zip}]" %></h2>
+					<p class="blog-post-meta"><%="#{wawa.updated_at.strftime("%d/%m/%Y %H:%M")}"%> by <%= "#{wawa.user.username}"%></p>
 
-	<%  if wawa.prime_photo.exists? %>
-		<%=  link_to "#{image_tag wawa.prime_photo.url(:thumb)}".html_safe, wawa_path(wawa.id) %>
-	<% else %>
-		<%= link_to "wawa page", wawa_path(wawa.id) %>
-	<% end %>
-	<%= "submitted by username [#{wawa.user.username}] " %>
-	<%= "[#{wawa.city}], [#{wawa.state}]" %>
-	<% if current_user && current_user == wawa.user || current_user && current_user.admin %>
-		<li><%= link_to "Edit wawa", edit_wawa_path(wawa.id) %></li>
-	<% end %>
-	<hr>
-<% end %>
+					<%  if wawa.prime_photo.exists? %>
+						<%=  link_to "#{image_tag wawa.prime_photo.url(:thumb)}".html_safe, wawa_path(wawa.id) %>
+					<% else %>
+						<li><%= link_to "wawa page", wawa_path(wawa.id) %></li>
+					<% end %>
+					<%= "submitted by username [#{wawa.user.username}] " %>
+					<%= "[#{wawa.city}, #{wawa.state} #{wawa.zip}]" %>
+					<% if current_user && current_user == wawa.user || current_user && current_user.admin %>
+						<li><%= link_to "Edit wawa", edit_wawa_path(wawa.id) %></li>
+					<% end %>
+					<hr>
+				</div> <!-- .blog-post  -->
+			<% end %>
 
+			<nav>
+				<ul class="pager">
+				  <li><a href="#">Previous</a></li>
+				  <li><a href="#">Next</a></li>
+				</ul>
+			</nav>
+
+		</div><!-- /.blog-main -->
+
+		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+	          <div class="sidebar-module sidebar-module-inset">
+	            <h4>About</h4>
+	            <p>Wawa Markets was founded in 1964. Many individual markets have come and gone over the years, leaving their distinctive Wawa storefront behind for anyone to see. A Notwa is one of those 'used-to-be-a-wawa's. Once you notice one, you'll see them everywhere!</p>
+	          </div>
+	          <div class="sidebar-module">
+	            <h4>Archives</h4>
+	            <ol class="list-unstyled">
+	              <li><a href="#">January 2014</a></li>
+	              <li><a href="#">December 2013</a></li>
+	              <li><a href="#">November 2013</a></li>
+	              <li><a href="#">October 2013</a></li>
+	              <li><a href="#">September 2013</a></li>
+	              <li><a href="#">August 2013</a></li>
+	              <li><a href="#">July 2013</a></li>
+	              <li><a href="#">June 2013</a></li>
+	              <li><a href="#">May 2013</a></li>
+	              <li><a href="#">April 2013</a></li>
+	            </ol>
+	          </div>
+	          <div class="sidebar-module">
+	            <h4>Elsewhere</h4>
+	            <ol class="list-unstyled">
+	              <li><a href="#">GitHub</a></li>
+	              <li><a href="#">Twitter</a></li>
+	              <li><a href="#">Facebook</a></li>
+	            </ol>
+	          </div>
+		</div><!-- /.blog-sidebar -->
+
+	</div><!-- /.row -->
+
+</div><!-- /.container -->
+
+<!--  -->
 <script type="text/javascript">
 	handler = Gmaps.build('Google');
 	handler.buildMap({
@@ -45,4 +94,11 @@
 			handler.fitMapToBounds();
 		}
 	);
+	// allow map to responsively resize
+	map = handler.getMap()
+	google.maps.event.addDomListener(window, "resize", function() {
+		 var center = map.getCenter();
+		 google.maps.event.trigger(map, "resize");
+		 map.setCenter(center); 
+	});
 </script>
