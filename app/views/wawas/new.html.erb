@@ -1,53 +1,39 @@
-<h1>What? One's missing from our database? Fix that!</h1>
+<div class="container">
 
-<p>
-	All you need to do to add a new Notwa to our site is to submit a photo of it. Don't worry if you don't have any more information than that; we'll help you find it!
-</p>
+	<h1 class="blog-title">What? One's missing from our database? Fix that!</h1>
 
-<%= form_for @wawa do |f| %>
-	<hr>
-	<p>
-		<%= f.hidden_field :user_id, value: params[:user_id] %>
-		<%= hidden_field_tag 'selected', 'none'  %>
+	<%= form_for @wawa do |f| %>
+		<div class="row">
+			<div class="col-sm-2 blog-main">
+				<h2>Upload Its Picture!</h2>
+				<hr>
+				<p>
+					<%= f.hidden_field :user_id, value: params[:user_id] %>
+					<%= hidden_field_tag 'selected', 'none'  %>
 
-		<%=f.label :prime_photo, "Upload A Picture of It" %>
-		<%= f.file_field :prime_photo %>
-	</p><hr><p>
-
-<h1>Drag the Marker to this Wawa's Location</h1>
-<div id="gmap"></div>
-
-	<h2>Optional Information</h2>
-	<hr>
-	</p><p>
-		<%=f.label :lat, 'GPS Latitude/Longitude' %>
-		<%=f.text_field :lat %>/
-		<%= f.text_field :long %>
-	</p><p>
-		<%=f.label :street1 %>
-		<%=f.text_field :street1 %>
-
-		<%=f.label :street2 %>
-		<%=f.text_field :street2 %>
-	</p><p>
-		<%=f.label :City %>
-		<%=f.text_field :city %>
-
-		<%=f.label :State %>
-		<%=f.text_field :state %>
-
-		<%=f.label :Zip %>
-		<%=f.text_field :zip %>
-	</p><p>
-		<%=f.label :info, 'Additional Info:' %>
-	</p><p>
-		<%= f.text_area :info, size: '50x20' %>
-	</p><p>
-		<%= f.submit :Add! %>
-	</p>
-
-<% end %>
-
+					<%=f.label :prime_photo, "Add Photo" %>
+					<%= f.file_field :prime_photo %>
+				</p>
+			</div>
+			<div class="col-sm-10 blog-main">
+				<h2>Drag the Marker to this Wawa's Location</h1>
+				<div id="gmap"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-9 col-sm-offset-1 blog-main">
+			<p>
+					<%=f.label :info, 'Additional Info:' %>
+				</p><p>
+					<%= f.hidden_field :lat %>
+					<%= f.hidden_field :long %>
+					<%= f.text_area :info, :class => "form-control", :placeholder => "We'll figure out the street address for your Notwa from the Map. Go ahead and add any other interesting information here, or wait and add a comment on the next page." %>
+				</p><p>
+					<%= f.submit :Add!, :class => "btn btn-lg btn-primary btn-block" %>
+				</p>
+		</div> <!-- row -->
+	<% end %>
+</div>
  <script type="text/javascript">
 
 	var myZoom = 8;
