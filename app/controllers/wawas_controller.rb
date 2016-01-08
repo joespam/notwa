@@ -24,7 +24,43 @@ class WawasController < ApplicationController
 		return username
 	end
 
-	helper_method :comments, :comment_username
+	# given a wawa record, fill in any missing info
+	# we can based on the information we do have
+	#
+	def geofill wawa
+		# if no lat/long, but there is a pic
+		# attempt to extract latlong data from pic
+		# 
+
+		if wawa.lat.nil? && wawa.prime_photo_file_name
+			wawa.set_latlong_from_pic
+		end
+
+		if wawa.lat && wawa.street1.nil? || wawa.street1 == "" 
+			# if lat lon has been set but there's no address
+			# get a street address from latlong
+			if !wawa.lat.nil?
+				wawa.latlong_to_address
+				wawa.save
+			end
+		elsif !wawa.street1.nil? || wawa.street1 != "" 			
+			# if street address is set and latlon isn't
+			# do a reverse geocode and set latlong
+			# 
+			if wawa.lat.nil? 
+
+				address = "#{wawa.street1}, #{wawa.city}, #{wawa.state}, #{wawa.zip}"
+				location = Geocoder.search( address )
+				if location.length > 0
+					wawa.lat = location[0].latitude
+					wawa.long = location[0].longitude
+					wawa.save
+				end
+			end
+		end
+	end
+
+	helper_method :comments, :comment_username, :geofill
 	
 	#------------------------------
 
@@ -36,7 +72,7 @@ class WawasController < ApplicationController
 		# wawa.user_id = wawa_params[:user_id]
 
 		# profile = user.profile
-
+		geofill wawa
 		if wawa 
 			flash[:notice] = "Thanks for uploading a new Notwa!"
 			redirect_to wawa_path wawa
@@ -44,6 +80,7 @@ class WawasController < ApplicationController
 			flash[:alert] = "Updating failed."
 			redirect_to new_wawa_path
 		end
+
 	end	
 
 	def destroy
@@ -81,31 +118,32 @@ class WawasController < ApplicationController
 		@comment = Comment.new
 		# @comments_hash = Hash[*@comments.map{ |c| [c.id, c.body] }.flatten]
 
+		geofill @wawa
 		# check if latitude/longitude is set
 		# 
-		if @wawa.lat.nil? && @wawa.prime_photo_file_name
-			@wawa.set_latlong_from_pic
+		# if @wawa.lat.nil? && @wawa.prime_photo_file_name
+		# 	@wawa.set_latlong_from_pic
 
-			# if lat lon has been set, 
-			# get a street address
-			if !@wawa.lat.nil?
-				@wawa.latlong_to_address
-			end
-		end
+		# 	# if lat lon has been set, 
+		# 	# get a street address
+		# 	if !@wawa.lat.nil?
+		# 		@wawa.latlong_to_address
+		# 	end
+		# end
 
-		if !@wawa.street1.nil? || @wawa.street1 != "" 
-			if @wawa.lat.nil? 
-				# if street address is set and latlon isn't
-				# do a reverse geocode and set latlong
-				address = "#{@wawa.street1}, #{@wawa.city}, #{@wawa.state}, #{@wawa.zip}"
-				location = Geocoder.search( address )
-				if location.length > 0
-					@wawa.lat = location[0].latitude
-					@wawa.long = location[0].longitude
-					@wawa.save
-				end
-			end
-		end
+		# if !@wawa.street1.nil? || @wawa.street1 != "" 
+		# 	if @wawa.lat.nil? 
+		# 		# if street address is set and latlon isn't
+		# 		# do a reverse geocode and set latlong
+		# 		address = "#{@wawa.street1}, #{@wawa.city}, #{@wawa.state}, #{@wawa.zip}"
+		# 		location = Geocoder.search( address )
+		# 		if location.length > 0
+		# 			@wawa.lat = location[0].latitude
+		# 			@wawa.long = location[0].longitude
+		# 			@wawa.save
+		# 		end
+		# 	end
+		# end
 
 		# now that we know we have a lat long, create a hash so we
 		# can put a marker on the map location
