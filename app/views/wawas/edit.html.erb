@@ -1,47 +1,64 @@
-<h1>Eddita Wawa</h1>
+<div class="container">
 
-<% if current_user %>
-	<% if current_user.admin %>
+	<h1 class="blog-title">Edit Wawa <%= "[#{@wawa.city}, #{@wawa.state} #{@wawa.zip}]"%></h1>
+	<div class="row">
+		<div class="col-sm-10 blog-main">
 
-		<div id="gmap"></div>
+		<% if current_user %>
+			<% if current_user.admin %>
 
-		<%= form_for @wawa, :url => wawa_path(@wawa), :html => { :multipart => true } do |f| %>
-			<p>
-				<%=f.label :Prime_Photo, "Change photo" %>
-				<% if @wawa.prime_photo.exists? %>
-					<%= image_tag @wawa.prime_photo.url(:medium) %>
+				<%= form_for @wawa, :url => wawa_path(@wawa), :html => { :multipart => true } do |f| %>
+					<div class="row">
+						<div class="col-sm-4">   
+							<% if @wawa.prime_photo.exists? %>
+								<%= image_tag @wawa.prime_photo.url(:medium) %>
+							<% end %>
+							<% if true || current_user == @wawa.user.id %>
+								<p>		
+									<%=f.label :Prime_Photo, "Change photo" %>
+									<%= f.file_field :prime_photo %>			
+								</p>					
+							<% end %>
+						</div>
+
+						<div class="col-sm-8">
+							<div id="gmap"></div>
+						</div>
+					</div>
+					<div class="row">					
+						<div class="col-sm-6">
+						<%=f.label :Latitude %>
+						<%=f.text_field :lat, :class => "form-control" %>
+						</div><div class="col-sm-6">
+						<%=f.label :Longitude %>
+						<%=f.text_field :long, :class => "form-control" %>
+					</div>
+					<%=f.label :street1 %>
+					<%=f.text_field :street1, :readonly => true, :class => "form-control" %>
+
+					<%=f.label :street2 %>
+					<%=f.text_field :street2, :readonly => true, :class => "form-control" %>
+					<div class="row">	
+						<div class="col-sm-4">
+							<%=f.label :City %>
+							<%=f.text_field :city, :readonly => true, :class => "form-control" %>
+						</div><div class="col-sm-4">
+							<%=f.label :State %>
+							<%=f.text_field :state, :readonly => true, :class => "form-control" %>
+						</div><div class="col-sm-4">
+							<%=f.label :Zip %>
+							<%=f.text_field :zip, :readonly => true, :class => "form-control" %>
+						</div>
+					</div>
+					<br>
+					<%= f.submit :change, :class => "btn btn-lg btn-primary btn-block" %>
 				<% end %>
-				<% if current_user == @wawa.user.id %>		
-					<%= f.file_field :prime_photo %>
-				<% end %>
-			</p><p>
-				<%=f.label :Latitude %>
-				<%=f.text_field :lat %>
 
-				<%=f.label :Longitude %>
-				<%=f.text_field :long %>
-			</p><p>
-				<%=f.label :street1 %>
-				<%=f.text_field :street1, :readonly => true %>
-
-				<%=f.label :street2 %>
-				<%=f.text_field :street2, :readonly => true %>
-			</p><p>
-				<%=f.label :City %>
-				<%=f.text_field :city, :readonly => true %>
-
-				<%=f.label :State %>
-				<%=f.text_field :state, :readonly => true %>
-
-				<%=f.label :Zip %>
-				<%=f.text_field :zip, :readonly => true %>
-			</p><p>
-				<%= f.submit :change %>
-			</p>
+			<% end %>
 		<% end %>
-
-	<% end %>
-<% end %>
+		</div>
+	</div>
+</div>
 
 <% content_for :scripts do %>
 	<script type="text/javascript">
@@ -82,3 +99,4 @@
 
 	 </script>
 <% end %>
+
