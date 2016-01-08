@@ -1,6 +1,6 @@
 <div class="container">
 
-<h1 class="blog-title"><%= "[#{@wawa.city}], [#{@wawa.state}] [#{@wawa.zip}]" %></h1>
+<h1 class="blog-title"><%= "[#{@wawa.city}, #{@wawa.state} #{@wawa.zip}]" %></h1>
 	<div class="row">
 
 		<div class="col-sm-8 blog-main">
@@ -9,11 +9,10 @@
 					<% if @wawa.prime_photo.exists? %>
 						<%= image_tag @wawa.prime_photo.url(:medium) %>
 					<% end %>
-		<% if current_user && current_user.admin %>
-			<%= link_to "edit this wawa", edit_wawa_path(@wawa.id), class: "btn btn-default", type: "button" %>
-		<% end %>
-		<p><%= link_to "Comment", "#add_comment_lb", class: "fancybox btn btn-default" %></p>
-
+					<% if current_user && current_user.admin %>
+						<%= link_to "edit this wawa", edit_wawa_path(@wawa.id), class: "btn btn-default", type: "button" %>
+					<% end %>
+					<p><%= link_to "Comment", "#add_comment_lb", class: "fancybox btn btn-default" %></p>
 				</div>
 
 				<div class="col-sm-8">
@@ -50,7 +49,7 @@
 											<%= f.label :body, "Edit Your Comment!" %>
 											<%= f.text_area :body, size: '50x20', :class => "form-control" %>
 										</p><p>
-											<%= f.submit "Edit Comment!",:class => "btn btn-lg btn-primary btn-block" %>
+											<%= f.submit "Edit Comment!", :class => "btn btn-lg btn-primary btn-block" %>
 										</p>
 									<% end %>
 								</div>
@@ -70,9 +69,9 @@
 				<%= form_for @comment, url: comment_path(:user_id => current_user.id, :wawa_id => @wawa.id), html: {method: :post} do |f| %>
 					<p>
 						<%= f.label :body, "Tell Us About It!" %>
-						<%= f.text_area :body, size: '50x20' %>
+						<%= f.text_area :body, size: '50x20', :class => "form-control" %>
 					</p><p>
-						<%= f.submit "Comment!" %>
+						<%= f.submit "Comment!",:class => "btn btn-lg btn-primary btn-block" %>
 					</p>
 				<% end %>
 			</div>

@@ -1,38 +1,50 @@
-<%= form_for @profile, url: user_profile_path(@user), :html => { :multipart => true } do |f| %>
-	<p>
-		<%  if @profile.avatar %>
-			<%=  image_tag @profile.avatar.url(:thumb) %>
-			<%=f.label :Avatar, "Change Avatar" %>
-		<% else %>
-			<%=f.label :Avatar %>
-		<% end %>
-		<%= f.file_field :avatar %>
-	</p><p>
-		<%=f.label :First %>
-		<%=f.text_field :fname %>
+<div class="container">
+	<%= form_for @profile, url: user_profile_path(@user), :html => { :multipart => true } do |f| %>
+		<div class="row">
+			<div class="col-sm-3">
+				<%if @profile.avatar %>
+					<%=  image_tag @profile.avatar.url(:thumb) %>
+					<br>
+					<%= f.label :Avatar, "Change Avatar" %>
+				<% else %>
+					<%=f.label :Avatar %>
+				<% end %>
+				<%= f.file_field :avatar, :class => "form-control" %>
+			</div>
+			<div class="col-sm-9">
+				<div class="row">
+					<div class="col-sm-6">
+						<%=f.label :First %>
+						<%=f.text_field :fname, :class => "form-control" %>
+					</div><div class="col-sm-6">
+						<%=f.label :Last %>
+						<%=f.text_field :lname, :class => "form-control" %>
+					</div>
+				</div>
+				<%=f.label :street1 %>
+				<%=f.text_field :street1, :class => "form-control" %>
 
-		<%=f.label :Last %>
-		<%=f.text_field :lname %>
-	</p><p>
-		<%=f.label :street1 %>
-		<%=f.text_field :street1 %>
-
-		<%=f.label :street2 %>
-		<%=f.text_field :street2 %>
-	</p><p>
-		<%=f.label :City %>
-		<%=f.text_field :city %>
-
-		<%=f.label :State %>
-		<%=f.text_field :state %>
-
-		<%=f.label :Zip %>
-		<%=f.text_field :zip %>
-	</p><p>
-		<%=f.label :Country %>
-		<%=f.text_field :country %>
-	</p>
-		<%= f.submit :change %>
-	</p>
-
-<% end %>
+				<%=f.label :street2 %>
+				<%=f.text_field :street2, :class => "form-control" %>
+				<div class="row">
+					<div class="col-sm-4">
+						<%=f.label :City %>
+						<%=f.text_field :city, :class => "form-control" %>
+					</div><div class="col-sm-4">
+						<%=f.label :State %>
+						<%=f.text_field :state, :class => "form-control" %>
+					</div><div class="col-sm-4">
+						<%=f.label :Zip %>
+						<%=f.text_field :zip, :class => "form-control" %>
+					</div>
+				</div>
+				</p><p>
+					<%=f.label :Country %>
+					<%=f.text_field :country, :class => "form-control" %>
+				</p>
+					<%= f.submit :change, :class => "btn btn-lg btn-primary btn-block" %>
+				</p>
+			</div>
+		</div>
+	<% end %>
+</div>
