@@ -14,22 +14,28 @@
 			<div class="blog-post">
 			   <div id="gmap"></div>
 			</div>
-			<% @wawas.each do |wawa|%>    
-			   <div class="blog-post">   
-		         <h2 class="blog-post-title"><%= "#{wawa.city}, #{wawa.state} #{wawa.zip}" %></h2>
-					<p class="blog-post-meta"><%="#{wawa.updated_at.strftime("%d/%m/%Y %H:%M")}"%> by <%= "#{wawa.user.username}"%></p>
+			<% @wawas.each_with_index do |wawa, index| %>
+
+				<% if index%2 > 0 %>
+					<div class="blog-post bordered">
+				<% else %>
+					 <div class="blog-post">
+				<% end %> 
 
 					<%  if wawa.prime_photo.exists? %>
 						<%=  link_to "#{image_tag wawa.prime_photo.url(:thumb)}".html_safe, wawa_path(wawa.id) %>
 					<% else %>
 						<li><%= link_to "wawa page", wawa_path(wawa.id) %></li>
 					<% end %>
-					<%= "submitted by username #{wawa.user.username} " %>
-					<%= "#{wawa.city}, #{wawa.state} #{wawa.zip}" %>
+
+		         <h2 class="blog-post-title"><%= "#{wawa.city}, #{wawa.state} #{wawa.zip}" %></h2>
+					<p class="blog-post-meta">Submitted by <%= "#{wawa.user.username}"%><br><%="Last Updated on #{wawa.updated_at.strftime("%d/%m/%Y %H:%M")}"%></p>
+
 					<% if current_user && current_user == wawa.user || current_user && current_user.admin %>
-						<li><%= link_to "Edit wawa", edit_wawa_path(wawa.id) %></li>
+						<div class="profilebox">
+							<li><%= link_to "Edit wawa", edit_wawa_path(wawa.id) %></li>
+						</div>
 					<% end %>
-					<hr>
 				</div> <!-- .blog-post  -->
 			<% end %>
 
@@ -51,13 +57,13 @@
 	          <div class="sidebar-module">
 	            <h4>Archives</h4>
 	            <ol class="list-unstyled">
-	              <li><a href="#">January 2015</a></li>
+	              <li><a href="#">January 2016</a></li>
 	            </ol>
 	          </div>
 	          <div class="sidebar-module">
 	            <h4>Elsewhere</h4>
 	            <ol class="list-unstyled">
-	              <li><a href="https://www.instagram.com">Instagram</a></li>
+	              <li><a href="https://www.wawa.com">Wawa</a></li>
 	              <li><a href="https://www.Twitter.com">Twitter</a></li>
 	              <li><a href="https://www.Facebook.com">Facebook</a></li>
 	            </ol>
