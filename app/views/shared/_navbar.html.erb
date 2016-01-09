@@ -17,7 +17,6 @@
 				<li><%= link_to "log out", destroy_user_session_path, method: :delete  %></li>
 				<li><%= link_to "change profile", edit_user_profile_path(current_user) %></li>
 				<li><%= link_to "add a wawa", new_wawa_path(:user_id => current_user) %></li>
-				<li><%= link_to "map" %></li>
 		   <% else %>
 				<li><%= link_to "log in", new_user_session_path %></li>
 				<li><%= link_to "sign up", new_user_registration_path %></li>

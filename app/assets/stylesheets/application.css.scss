@@ -35,7 +35,43 @@
 // 	background-color: #111111;
 // 	color: #0E0EFF;
 // }
-body { padding-top: 70px; }
+body { 
+	padding-top: 70px; 
+	// background: url('/assets/stonework.jpg') center center cover no-repeat fixed;
+  /* Location of the image */
+  background-image: url('/assets/stonework.jpg');
+  
+  /* Background image is centered vertically and horizontally at all times */
+  background-position: center center;
+  
+  /* Background image doesn't tile */
+  background-repeat: no-repeat;
+  
+  /* Background image is fixed in the viewport so that it doesn't move when 
+     the content's height is greater than the image's height */
+  background-attachment: fixed;
+  
+  /* This is what makes the background image rescale based
+     on the container's size */
+  background-size: cover;
+}
+
+/*
+ *  styling for google map element
+ */
+.bordered {
+	border: 3px solid black;
+	padding: 5px;
+	padding-left: 20px;
+	padding-top: 15px;
+}
+
+.blog-post {
+	padding: 5px;
+	padding-left: 20px;	
+	padding-top: 15px;
+
+}
 
 .profileBox {
 	border: 10px ridge gray;
