@@ -1,6 +1,6 @@
 <div class="container">
 
-	<h1 class="blog-title">Edit Wawa <%= "[#{@wawa.city}, #{@wawa.state} #{@wawa.zip}]"%></h1>
+	<h1 class="blog-title crimson avoid_brand">Edit NotWa <%= "#{@wawa.city}, #{@wawa.state} #{@wawa.zip}"%></h1>
 	<div class="row">
 		<div class="col-sm-10 blog-main">
 
@@ -19,6 +19,8 @@
 									<%= f.file_field :prime_photo %>			
 								</p>					
 							<% end %>
+							<%=f.label :info, "Additional Info" %>
+							<%= f.text_area :info, :class => "form-control" %>
 						</div>
 
 						<div class="col-sm-8">

@@ -27,7 +27,7 @@
 					<%  if wawa.prime_photo.exists? %>
 						<%=  link_to "#{image_tag wawa.prime_photo.url(:thumb)}".html_safe, wawa_path(wawa.id) %>
 					<% else %>
-						<li><%= link_to "wawa page", wawa_path(wawa.id) %></li>
+						<%= link_to "Picture Unavailable - click here to see this NotWa's page", wawa_path(wawa.id), class: "btn btn-default" %>
 					<% end %>
 
 		         <h2 class="blog-post-title crimson"><%= "#{wawa.city}, #{wawa.state} #{wawa.zip}" %></h2>
@@ -35,7 +35,7 @@
 
 					<% if current_user && current_user == wawa.user || current_user && current_user.admin %>
 						<div class="profilebox">
-							<li><%= link_to "Edit wawa", edit_wawa_path(wawa.id) %></li>
+							<%= link_to "Edit wawa", edit_wawa_path(wawa.id), class: "btn btn-default" %>
 						</div>
 					<% end %>
 				</div> <!-- .blog-post  -->

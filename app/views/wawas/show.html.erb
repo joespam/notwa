@@ -12,15 +12,24 @@
 					<% if current_user && current_user.admin %>
 						<%= link_to "edit this wawa", edit_wawa_path(@wawa.id), class: "btn btn-default", type: "button" %>
 					<% end %>
+				<% if @comments && @comments.length > 0 %>
 					<%= link_to "Comment", "#add_comment_lb", class: "fancybox btn btn-default" %>
+				<% end %>
 				</div>
 				
 				<div class="col-sm-2">
 				   <div id="gmap_show"></div>
 				</div>
 			</div>
-
-			<% if @comments %>
+			<% if @wawa.info && @wawa.info != "" %>
+				<div class="row">
+					<h2 class="crimson"> Additional Info:</h2>
+					<p><%= @wawa.info %></p>
+					<hr>
+				</div>
+			<% end %>
+			<h2 class="crimson">Comments</h2>
+			<% if @comments && @comments.length > 0 %>
 				<% @comments.each_with_index do |comment, index| %>
 
 					<% if index%2 > 0 %>
@@ -49,19 +58,20 @@
 									</div>
 								</div>
 
-							<div class="col-sm-9">
-								<p class="comment_byline"><%= "#{comment.updated_at.strftime("%d/%m/%Y %H:%M")}"%> by <strong><%= comment_username comment %></strong></p>
-								<hr>
-								<p><%= comment.body %></p>
-							</div>
-
-
+								<div class="col-sm-9">
+									<p class="comment_byline"><%= "#{comment.updated_at.strftime("%d/%m/%Y %H:%M")}"%> by <strong><%= comment_username comment %></strong></p>
+									<hr>
+									<p><%= comment.body %></p>
+								</div>
 
 							<% end %>
 						</div>
 					</div>       <!-- end of blog-post or bordered -->
 				<% end %> <!-- end of comments.each -->
+			<% else %>
+				<%= link_to "Be the First to Comment!", "#add_comment_lb", class: "fancybox btn btn-default" %>
 			<% end %> <!-- end if comments -->
+
 		</div> <!-- column -->
 
 	<!-- lightbox for adding new comments -->
