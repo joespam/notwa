@@ -17,11 +17,12 @@ user2.profile = prof1
 user2.save
 
 # for testing detection of address from lat long
-wawa1 = Wawa.create(lat: 39.911590, long: -75.440757)
+defaultImg = File.new("#{Rails.root}/app/assets/images/missing.jpg", "r")
+wawa1 = Wawa.new(lat: 39.911590, long: -75.440757, prime_photo: defaultImg)
 wawa1.user = user1
 wawa1.save
 # for testing detection of lat long from address
-wawa2 = Wawa.create( street1: "2809 Egypt Rd", city: "Audubon", state: "PA", zip: "19403")
+wawa2 = Wawa.new( street1: "2809 Egypt Rd", city: "Audubon", state: "PA", zip: "19403", prime_photo: defaultImg)
 wawa2.user = user2
 wawa2.save
 

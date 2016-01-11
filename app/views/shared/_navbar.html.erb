@@ -15,7 +15,7 @@
        <ul class="nav navbar-nav navbar-right">
 		  	<% if current_user %>
           <li><%= link_to "add a wawa", new_wawa_path(:user_id => current_user), { :class=>"navlink link_override"}  %></li>
-  				<li><%= link_to "change profile", edit_user_profile_path(current_user), { :class=>"navlink link_override" }  %></li>
+  				<li><%= link_to "update profile", edit_user_profile_path(current_user), { :class=>"navlink link_override" }  %></li>
           <li><%= link_to "log out", destroy_user_session_path, method: :delete, :class=>"navlink link_override" %></li>
 		   <% else %>
           <li><%= link_to "sign up to add your own NotWa", new_user_registration_path, { :class=>"navlink link_override" }  %></li>

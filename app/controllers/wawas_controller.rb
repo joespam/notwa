@@ -101,7 +101,10 @@ class WawasController < ApplicationController
 
  		# and of course the above hack fails, so fuck it; no default image for a wawa.
  		# 
-		wawa = Wawa.create(wawa_params)
+		# wawa = Wawa.create(wawa_params)
+
+ 		wawa = Wawa.new
+		wawa.update_attributes wawa_params
 
 		geofill wawa
 		if wawa 
