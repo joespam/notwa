@@ -108,6 +108,9 @@ class WawasController < ApplicationController
 		end
 	end
 
+	def landing
+	end
+
 	def new
 		@wawa = Wawa.new
 	end
