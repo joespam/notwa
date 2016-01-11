@@ -67,11 +67,45 @@ class WawasController < ApplicationController
 	def create
 
 		puts params
+		puts "------------------------------"
 
-		wawa = Wawa.create(wawa_params)
-		# wawa.user_id = wawa_params[:user_id]
+		# the following code SHOULD be unneccesary, but
+		# I cannot get a wawa created with no user-specified image
+		# to use the default image specified in the wawa.rb model file.
+		# This functionality works fine in profile.rb models, and I 
+		# am mystified as to why it will not work for wawas.
+		#
+		# SO: check for the case where the user has not specified an image file.
+		# If they have not, create a new image using the designated default 
+		# image, then shoehorn it into the params :wawa hash as would have
+		# happened if the user had specified that image, so the create
+		# statement will have a prime photo to create
+		#
+		if (wawa_params[:prime_photo].nil?)
+			# failed attempts kept for posterity
+			#
+			# file1 = File.new("missing.jpg", "r")
+			# file2 = File.new("/missing.jpg", "r")
+			# file3 = File.new("images/missing.jpg", "r")
+			# file4 = File.new("/images/missing.jpg", "r")
+			# file5 = File.new("assets/missing.jpg", "r")
+			# file6 = File.new("/assets/missing.jpg", "r")
+			# file7 = File.new("assets/images/missing.jpg", "r")
+			# file8 = File.new("/assets/images/missing.jpg", "r")
+			# file9 = File.new(asset_path("missing.jpg", image))
+			# file10 = File.new(image-url('missing.jpg'))
+			file11 = File.new("#{Rails.root}/app/assets/images/missing.jpg", "r")
+			wawa_params.merge(prime_photo: file11)
 
-		# profile = user.profile
+ 		end
+
+ 		# and of course the above hack fails, so fuck it; no default image for a wawa.
+ 		# 
+		# wawa = Wawa.create(wawa_params)
+
+ 		wawa = Wawa.new
+		wawa.update_attributes wawa_params
+
 		geofill wawa
 		if wawa 
 			flash[:notice] = "Thanks for uploading a new Notwa!"
