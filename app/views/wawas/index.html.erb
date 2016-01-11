@@ -1,9 +1,11 @@
 <div class="container">
+
 	   <div class="blog-header">
-	     <h1 class="blog-title">Notwa!</h1>
-	     <p class="lead blog-description">Hey, that used to be a Wawa!</p>
+	     <p class="lead blog-description">
+	     <h1 class="avoid_brand big_header">Hey, that used to be a Wawa!</h1>
+	     </p>
 	     <% if !current_user %>
-	        <p>Did we miss one? Sign up and add it!</p>
+	        <p class="avoid_brand">Did we miss one? Sign up and add it!</p>
 	     <% end %>
 	   </div>
 
@@ -28,7 +30,7 @@
 						<li><%= link_to "wawa page", wawa_path(wawa.id) %></li>
 					<% end %>
 
-		         <h2 class="blog-post-title"><%= "#{wawa.city}, #{wawa.state} #{wawa.zip}" %></h2>
+		         <h2 class="blog-post-title crimson"><%= "#{wawa.city}, #{wawa.state} #{wawa.zip}" %></h2>
 					<p class="blog-post-meta">Submitted by <%= "#{wawa.user.username}"%><br><%="Last Updated on #{wawa.updated_at.strftime("%d/%m/%Y %H:%M")}"%></p>
 
 					<% if current_user && current_user == wawa.user || current_user && current_user.admin %>
@@ -49,19 +51,19 @@
  -->
 		</div><!-- /.blog-main -->
 
-		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+		<div class="col-sm-4 blog-sidebar">
 	          <div class="sidebar-module sidebar-module-inset">
-	            <h4>About</h4>
+	            <h3 class="sidebar_text">About</h3>
 	            <p>Wawa Markets was founded in 1964. Many individual markets have come and gone over the years, leaving their distinctive Wawa storefront behind for anyone to see. A Notwa is one of those 'used-to-be-a-wawa's. Once you notice one, you'll see them everywhere!</p>
 	          </div>
 	          <div class="sidebar-module">
-	            <h4>Archives</h4>
+	            <h3 class="sidebar_text">Archives</h3>
 	            <ol class="list-unstyled">
 	              <li><a href="#">January 2016</a></li>
 	            </ol>
 	          </div>
 	          <div class="sidebar-module">
-	            <h4>Elsewhere</h4>
+	            <h3 class="sidebar_text">Elsewhere</h3>
 	            <ol class="list-unstyled">
 	              <li><a href="https://www.wawa.com">Wawa</a></li>
 	              <li><a href="https://www.Twitter.com">Twitter</a></li>

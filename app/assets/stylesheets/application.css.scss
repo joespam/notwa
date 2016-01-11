@@ -17,26 +17,9 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-// .nav ul {
-// 	margin: 20; 
-// }
-
-// .nav ul li {
-// 	display: inline; 
-// 	margin-left: 30px;
-// }
-
-// .nav ul li a {
-// 	text-decoration: none;
-// 	font-size: 30px; 
-// }
-
-// .nav ul li a:hover {
-// 	background-color: #111111;
-// 	color: #0E0EFF;
-// }
 body { 
-	padding-top: 70px; 
+	font-size: 24px;
+	padding-top: 130px; 
 	// background: url('/assets/stonework.jpg') center center cover no-repeat fixed;
   /* Location of the image */
   background-image: url('/assets/stonework.jpg');
@@ -54,10 +37,105 @@ body {
   /* This is what makes the background image rescale based
      on the container's size */
   background-size: cover;
+};
+@media (min-width: 1400px) {
+	.nav_bg {
+		height: 100px;
+		font-size: 25px;
+		background-image: url('/assets/rooflinelarge.jpg');	
+		background-repeat: no-repeat;
+		background-size: cover;
+		width: 100%;
+	};
+}
+@media (min-width: 1179px) {
+	.nav_bg {
+		height: 100px;
+		font-size: 25px;
+		background-image: url('/assets/rooflineMedLarge.jpg');	
+		background-repeat: no-repeat;
+		background-size: cover;
+		width: 100%;
+	};
+}
+@media (min-width: 800px) {
+	.nav_bg {
+		height: 100px;
+		font-size: 25px;
+		background-image: url('/assets/rooflineMed728x97.jpg');	
+		background-repeat: no-repeat;
+		background-size: cover;
+		width: 100%;
+	};
+}
+@media (min-width: 401px) {
+	.nav_bg {
+		height: 100px;
+		font-size: 25px;
+		background-image: url('/assets/rooflineLaptop.jpg');	
+		background-repeat: no-repeat;
+		background-size: cover;
+		width: 100%;
+	};
+}
+@media (max-width: 400px) {
+	.nav_bg {
+		height: 100px;
+		font-size: 25px;
+		background-image: url('/assets/rooflineMobile.jpg');	
+		background-repeat: no-repeat;
+		background-size: cover;
+		width: 100%;
+	};
+}
+
+.nav_bg {
+	height: 100px;
+	font-size: 25px;
+	background-image: url('/assets/rooflineMedLarge.jpg');	
+	// background-image: url('/assets/rooflineLaptop.jpg');	
+	/* Background image doesn't tile */
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 100%;
+}
+.avoid_brand {
+	margin-left: 30px;
+}
+.navlink {
+	margin-top: 20px;
+	margin-right: 20px;
+}
+a.link_override {
+	color: white !important;
+   &:hover {
+      color: red !important;
+    }
+}
+.big_header {
+	font-size: 60px;
+}
+.sidebar_text {
+	font-size: 30px;
+	color: Crimson;
+}
+.crimson {
+	color: Crimson;
+}
+.profile_top_padding {
+	margin-top: 40px; 
+}
+
+.comment_byline {
+	font-size: 20px;	
+}
+
+.comment_btn {
+	margin-top: 40px;
 }
 
 /*
- *  styling for google map element
+ *  styling for wawa/comments
  */
 .bordered {
 	border: 3px solid black;
@@ -65,7 +143,6 @@ body {
 	padding-left: 20px;
 	padding-top: 15px;
 }
-
 .blog-post {
 	padding: 5px;
 	padding-left: 20px;	
@@ -82,6 +159,10 @@ body {
  *  styling for google map element
  */
 #gmap {
-	width: 800px;
+	width: 700px;
 	height: 400px;
+}
+#gmap_show {
+	width: 300px;
+	height: 450px;
 }
