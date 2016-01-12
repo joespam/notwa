@@ -31,7 +31,16 @@
 					<% end %>
 
 		         <h2 class="blog-post-title crimson"><%= "#{wawa.city}, #{wawa.state} #{wawa.zip}" %></h2>
-					<p class="blog-post-meta">Submitted by <%= "#{wawa.user.username}"%><br><%="Last Updated on #{wawa.updated_at.strftime("%d/%m/%Y %H:%M")}"%></p>
+					<p class="blog-post-meta">
+						Submitted by <%= "#{wawa.user.username}"%>
+						<%if wawa.user.profile %>
+							<% if wawa.user.profile.avatar %>
+								<%=  image_tag wawa.user.profile.avatar.url(:tiny) %>
+							<% end %>
+						<% end %>
+						<br>
+						<%="Last Updated on #{wawa.updated_at.strftime("%d/%m/%Y %H:%M")}"%>
+					</p>
 
 					<% if current_user && current_user == wawa.user || current_user && current_user.admin %>
 						<div class="profilebox">
