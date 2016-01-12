@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  # get '/' => 'wawas#landing'
-  # get '/home' => 'wawas#index', as: :home
-  get '/' => 'wawas#index', as: :home
+  get '/' => 'wawas#landing'
+  get '/home' => 'wawas#index', as: :home
+  # get '/' => 'wawas#index', as: :home
   resources :wawas
 
   # get '/users/:id' => 'users#show', as: :user
