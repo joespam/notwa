@@ -17,7 +17,7 @@ user2.profile = prof1
 user2.save
 
 # for testing detection of address from lat long
-defaultImg = File.new("#{Rails.root}/app/assets/images/missing.jpg", "r")
+defaultImg = File.new("#{Rails.root}/app/assets/images/NotwaDefaultPhoto.jpg", "r")
 wawa1 = Wawa.new(lat: 39.911590, long: -75.440757, prime_photo: defaultImg)
 wawa1.user = user1
 wawa1.save

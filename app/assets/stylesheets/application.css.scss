@@ -38,61 +38,11 @@ body {
      on the container's size */
   background-size: cover;
 };
-@media (min-width: 1400px) {
-	.nav_bg {
-		height: 100px;
-		font-size: 25px;
-		background-image: url('/assets/rooflinelarge.jpg');	
-		background-repeat: no-repeat;
-		background-size: cover;
-		width: 100%;
-	};
-}
-@media (min-width: 1179px) {
-	.nav_bg {
-		height: 100px;
-		font-size: 25px;
-		background-image: url('/assets/rooflineMedLarge.jpg');	
-		background-repeat: no-repeat;
-		background-size: cover;
-		width: 100%;
-	};
-}
-@media (min-width: 800px) {
-	.nav_bg {
-		height: 100px;
-		font-size: 25px;
-		background-image: url('/assets/rooflineMed728x97.jpg');	
-		background-repeat: no-repeat;
-		background-size: cover;
-		width: 100%;
-	};
-}
-@media (min-width: 401px) {
-	.nav_bg {
-		height: 100px;
-		font-size: 25px;
-		background-image: url('/assets/rooflineLaptop.jpg');	
-		background-repeat: no-repeat;
-		background-size: cover;
-		width: 100%;
-	};
-}
-@media (max-width: 400px) {
-	.nav_bg {
-		height: 100px;
-		font-size: 25px;
-		background-image: url('/assets/rooflineMobile.jpg');	
-		background-repeat: no-repeat;
-		background-size: cover;
-		width: 100%;
-	};
-}
 
 .nav_bg {
 	height: 100px;
 	font-size: 25px;
-	background-image: url('/assets/rooflineMedLarge.jpg');	
+	background-image: url('/assets/rooflineLJ.jpg');	
 	// background-image: url('/assets/rooflineLaptop.jpg');	
 	/* Background image doesn't tile */
 	background-repeat: no-repeat;
