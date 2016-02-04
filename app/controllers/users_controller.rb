@@ -55,7 +55,7 @@ class UsersController < ApplicationController
 			if @user.profile
 				@profile = @user.profile
 			else
-				@profile = Profile.new
+				@profile = Profile.new(fname:"Empty",lname:"Empty",street1:"Empty",city:"Empty",state:"Empty",zip:"Empty",country:"Empty")
 				@user.profile = @profile
 			end
 		# else
