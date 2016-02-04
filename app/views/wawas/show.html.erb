@@ -12,7 +12,7 @@
 					<% if current_user && current_user.admin || current_user && current_user == @wawa.user_id%>
 						<%= link_to "edit this wawa", edit_wawa_path(@wawa.id), class: "btn btn-default", type: "button" %>
 					<% end %>
-				<% if @comments && @comments.length > 0 %>
+				<% if current_user && @comments && @comments.length > 0 %>
 					<%= link_to "Comment", "#add_comment_lb", class: "fancybox btn btn-default" %>
 				<% end %>
 				</div>
@@ -57,19 +57,18 @@
 										<% end %>
 									</div>
 								</div>
-
-								<div class="col-sm-9">
-									<p class="comment_byline">
-										<%= "#{comment.updated_at.strftime("%d/%m/%Y %H:%M")}"%> by <strong><%= comment_username comment %></strong>
-										<%if comment.user.profile.avatar %>
-											<%=  image_tag comment.user.profile.avatar.url(:tiny) %>
-										<% end %>
-									</p>
-									<hr>
-									<p><%= comment.body %></p>
-								</div>
-
 							<% end %>
+							
+							<div class="col-sm-9">
+								<p class="comment_byline">
+									<%= "#{comment.updated_at.strftime("%d/%m/%Y %H:%M")}"%> by <strong><%= comment_username comment %></strong>
+									<%if comment.user.profile.avatar %>
+										<%=  image_tag comment.user.profile.avatar.url(:tiny) %>
+									<% end %>
+								</p>
+								<hr>
+								<p><%= comment.body %></p>
+							</div>
 						</div>
 					</div>       <!-- end of blog-post or bordered -->
 				<% end %> <!-- end of comments.each -->
@@ -98,6 +97,7 @@
 
 	<!-- script for adding google map -->
 	<script type="text/javascript">
+
 		handler = Gmaps.build('Google');
 		handler.buildMap({
 				provider: {
@@ -115,5 +115,32 @@
 				handler.getMap().setZoom(17);
 			}
 		);
+		// connect the search box to a google maps search box
+		//
+		var searchBox = new google.maps.places.SearchBox(document.getElementById('mapsearch'));
+		// var searchBox = new google.maps.places.SearchBox($('#mapsearch'));
+
+		// place change event on search box
+		google.maps.event.addListener(searchBox, 'places_changed', function() {
+
+			console.log("testlistener");
+
+			// console.log(searchBox.getPlaces());
+			var places = searchBox.getPlaces();
+
+			// bound
+			var bounds = new google.maps.LatLngBounds();
+			var i, place;
+
+			for (i=0; place=places[i];i++){
+
+				// console.log(place.geometry.location);
+
+				bounds.extend(place.geometry.location);
+				//marker.setPosition(place.geometry.location);
+			};
+			map.fitBounds(bounds); //fit to the bound
+			map.setZoom(15); // set zoom
+		});
 	</script>
 
