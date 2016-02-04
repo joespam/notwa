@@ -3,47 +3,50 @@
 	<div class="col-sm-9 col-sm-offset-2">
 		<h1><%= "#{current_user.username}" %></h1>
 	</div>
-	<%= form_for @profile, url: user_profile_path(@user), :html => { :multipart => true } do |f| %>
+
+
 		<div class="row">
 			<div class="col-sm-2">
 				<%if @profile.avatar %>
 					<%=  image_tag @profile.avatar.url(:thumb) %>
 				<% else %>
-					<%=f.label :Avatar, "No Avatar Selected" %>
+					<p> Avatar, "No Avatar Selected" </p>
 				<% end %>
 			</div>
 			<div class="col-sm-9">
 				<div class="row">
 					<div class="col-sm-6">
-						<%=f.label :First %>
-						<%=f.text_field :fname, :readonly => true, :class => "form-control" %>
+						<p> First </p><hr>
+						<p class="bordered"> <%= @profile.fname %> </p>
 					</div><div class="col-sm-6">
-						<%=f.label :Last %>
-						<%=f.text_field :lname, :readonly => true, :class => "form-control" %>
+						<p> Last </p><hr>
+						<p class="bordered"> <%= @profile.lname %> </p>
 					</div>
 				</div>
-				<%=f.label :street1 %>
-				<%=f.text_field :street1, :readonly => true, :class => "form-control" %>
+				<p> Street 1 </p><hr>
+				<p class="bordered"> <%= @profile.street1 %> </p><hr>
 				<% if @profile.street2 && @profile.street2 != '' %>
-					<%=f.label :street2 %>
-					<%=f.text_field :street2, :readonly => true, :class => "form-control" %>
+					<p> Street 2 </p><hr>
+					<p class="bordered"> <%= @profile.street2 %> </p>
 				<% end %>
 				<div class="row">
 					<div class="col-sm-4">
-						<%=f.label :City %>
-						<%=f.text_field :city, :readonly => true, :class => "form-control" %>
+						<p> City </p><hr>
+						<p class="bordered"> <%= @profile.city %> </p>
 					</div><div class="col-sm-4">
-						<%=f.label :State %>
-						<%=f.text_field :state, :readonly => true, :class => "form-control" %>
+						<p> State </p><hr>
+						<p class="bordered"> <%= @profile.state %> </p>
 					</div><div class="col-sm-4">
-						<%=f.label :Zip %>
-						<%=f.text_field :zip, :readonly => true, :class => "form-control" %>
+						<p> Zip </p><hr>
+						<p class="bordered"> <%= @profile.zip %> </p>
 					</div>
 				</div>
-				</p><p>
-					<%=f.label :Country %>
-					<%=f.text_field :country, :readonly => true, :class => "form-control" %>
+				<div class="row">
+					<div class="col-sm-12">				
+						<p> Country </p>
+						<p class="bordered"> <%= @profile.country %> </p>
+					</div>
+				</div>
 			</div>
 		</div>
-	<% end %>
 </div>

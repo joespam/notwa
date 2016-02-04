@@ -156,31 +156,6 @@ class WawasController < ApplicationController
 		# @comments_hash = Hash[*@comments.map{ |c| [c.id, c.body] }.flatten]
 
 		geofill @wawa
-		# check if latitude/longitude is set
-		# 
-		# if @wawa.lat.nil? && @wawa.prime_photo_file_name
-		# 	@wawa.set_latlong_from_pic
-
-		# 	# if lat lon has been set, 
-		# 	# get a street address
-		# 	if !@wawa.lat.nil?
-		# 		@wawa.latlong_to_address
-		# 	end
-		# end
-
-		# if !@wawa.street1.nil? || @wawa.street1 != "" 
-		# 	if @wawa.lat.nil? 
-		# 		# if street address is set and latlon isn't
-		# 		# do a reverse geocode and set latlong
-		# 		address = "#{@wawa.street1}, #{@wawa.city}, #{@wawa.state}, #{@wawa.zip}"
-		# 		location = Geocoder.search( address )
-		# 		if location.length > 0
-		# 			@wawa.lat = location[0].latitude
-		# 			@wawa.long = location[0].longitude
-		# 			@wawa.save
-		# 		end
-		# 	end
-		# end
 
 		# now that we know we have a lat long, create a hash so we
 		# can put a marker on the map location

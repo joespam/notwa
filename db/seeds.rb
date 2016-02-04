@@ -9,11 +9,13 @@
 user1 = User.create(email:"joe.spampinato@gmail.com", username: "joespam", password:"12345678",admin: true)
 prof1 = Profile.create(fname: "Joe",lname: "Spampinato",street1: "330 Prussian Lane",street2: "",city: "Wayne",state: "PA",zip: "19087",country: "USA")
 user1.profile = prof1
+prof1.save
 user1.save
 
 user2 = User.create(email:"jcspampinato@gmail.com", username: "josephus", password:"12345678",admin: true)
 prof2 = Profile.create(fname: "Joe",lname: "Spampinato",street1: "200 Lincoln Ave",street2: "STE 116",city: "Phoenixville",state: "PA",zip: "19460",country: "USA")
 user2.profile = prof1
+prof2.save
 user2.save
 
 # for testing detection of address from lat long
