@@ -7,8 +7,8 @@ class Wawa < ActiveRecord::Base
 	# paperclip validations
 	#
 	# has_attached_file :prime_photo, styles: { large: "600x600", medium: "300x300>", thumb: "100x100>" }, default_url: "NotwaDefaultPhoto.jpg"
-	# has_attached_file :prime_photo, styles: { large: "600x600", medium: "300x300>", thumb: "100x100>" }, default_url: ActionController::Base.helpers.asset_path("missing.jpg")
-	has_attached_file :prime_photo, styles: { large: "600x600", medium: "300x300>", thumb: "100x100>" }, default_url: "missing.jpg"
+	# has_attached_file :prime_photo, styles: { large: "600x600", medium: "300x300>", thumb: "100x100>" }, default_url: ActionController::Base.helpers.asset_path("NotwaDefaultPhoto.jpg")
+	has_attached_file :prime_photo, styles: { large: "600x600", medium: "300x300>", thumb: "100x100>" }, :default_url => "/images/NotwaDefaultPhoto.jpg"
 	validates_attachment_content_type :prime_photo, content_type: /\Aimage\/.*\Z/
 
 	# get the lat long coords from the EXIF data from photo

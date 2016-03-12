@@ -6,9 +6,7 @@
 		<div class="col-sm-8 blog-main">
 			<div class="row">
 			   <div class="col-sm-10">   
-					<% if @wawa.prime_photo.exists? %>
-						<%= image_tag @wawa.prime_photo.url(:large) %>
-					<% end %>
+					<%= image_tag @wawa.prime_photo.url(:large) %>
 					<% if current_user && current_user.admin || current_user && current_user == @wawa.user_id%>
 						<%= link_to "edit this wawa", edit_wawa_path(@wawa.id), class: "btn btn-default", type: "button" %>
 					<% end %>

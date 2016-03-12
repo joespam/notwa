@@ -31,7 +31,6 @@ class WawasController < ApplicationController
 		# if no lat/long, but there is a pic
 		# attempt to extract latlong data from pic
 		# 
-
 		if wawa.lat.nil? && wawa.prime_photo_file_name
 			wawa.set_latlong_from_pic
 		end
@@ -39,9 +38,9 @@ class WawasController < ApplicationController
 		if wawa.lat && wawa.street1.nil? || wawa.street1 == "" 
 			# if lat lon has been set but there's no address
 			# get a street address from latlong
+			#
 			if !wawa.lat.nil?
 				wawa.latlong_to_address
-				wawa.save
 			end
 		elsif !wawa.street1.nil? || wawa.street1 != "" 			
 			# if street address is set and latlon isn't
@@ -54,10 +53,18 @@ class WawasController < ApplicationController
 				if location.length > 0
 					wawa.lat = location[0].latitude
 					wawa.long = location[0].longitude
-					wawa.save
 				end
 			end
+		else
+			# if all else fails, default the location to philadelphia city center
+			#
+			wawa.lat = 39.9523400
+			wawa.long = -75.1637900
 		end
+
+		# make any changes permanent
+		wawa.save
+
 	end
 
 	helper_method :comments, :comment_username, :geofill
@@ -66,49 +73,29 @@ class WawasController < ApplicationController
 
 	def create
 
-		puts params
-		puts "------------------------------"
-
-		# the following code SHOULD be unneccesary, but
-		# I cannot get a wawa created with no user-specified image
-		# to use the default image specified in the wawa.rb model file.
-		# This functionality works fine in profile.rb models, and I 
-		# am mystified as to why it will not work for wawas.
-		#
-		# SO: check for the case where the user has not specified an image file.
-		# If they have not, create a new image using the designated default 
-		# image, then shoehorn it into the params :wawa hash as would have
-		# happened if the user had specified that image, so the create
-		# statement will have a prime photo to create
+		# the following code should be unneccesary, but
+		# in the interest of overengineering if somehow
+		# the wawa database model default image fails
 		#
 		if (wawa_params[:prime_photo].nil?)
-			# failed attempts kept for posterity
 			#
-			# file1 = File.new("missing.jpg", "r")
-			# file2 = File.new("/missing.jpg", "r")
-			# file3 = File.new("images/missing.jpg", "r")
-			# file4 = File.new("/images/missing.jpg", "r")
-			# file5 = File.new("assets/missing.jpg", "r")
-			# file6 = File.new("/assets/missing.jpg", "r")
-			# file7 = File.new("assets/images/missing.jpg", "r")
-			# file8 = File.new("/assets/images/missing.jpg", "r")
-			# file9 = File.new(asset_path("missing.jpg", image))
-			# file10 = File.new(image-url('missing.jpg'))
-			file11 = File.new("#{Rails.root}/app/assets/images/missing.jpg", "r")
-			wawa_params.merge(prime_photo: file11)
-
+			file = File.new("#{Rails.root}/public/images/NotwaDefaultPhoto.jpg", "r")
+			wawa_params.merge(prime_photo: file)
  		end
 
- 		# and of course the above hack fails, so fuck it; no default image for a wawa.
- 		# 
-		# wawa = Wawa.create(wawa_params)
+ 	# 	wawa = Wawa.new()
+		# wawa.update_attributes wawa_params
 
- 		wawa = Wawa.new
-		wawa.update_attributes wawa_params
+ 		wawa = Wawa.create(wawa_params)
 
 		geofill wawa
 		if wawa 
 			flash[:notice] = "Thanks for uploading a new Notwa!"
+			if !wawa.lat || !wawa.long
+				wawa.lat = 39.9523400
+				wawa.long = -75.1637900
+			end
+			wawa.save
 			redirect_to wawa_path wawa
 		else
 			flash[:alert] = "Updating failed."
@@ -121,10 +108,6 @@ class WawasController < ApplicationController
 	end
 
 	def edit
-		# puts "-------------------------"
-		# puts params
-		# puts "-------------------------"
-
 		@wawa = Wawa.find params[:id]
 		@user = @wawa.user
 	end
@@ -153,7 +136,6 @@ class WawasController < ApplicationController
 		@wawa = Wawa.find params[:id]
 		@comments = @wawa.comments
 		@comment = Comment.new
-		# @comments_hash = Hash[*@comments.map{ |c| [c.id, c.body] }.flatten]
 
 		geofill @wawa
 
@@ -190,6 +172,7 @@ class WawasController < ApplicationController
 			flash[:alert] = "Updating failed."
 			redirect_to edit_wawa_path wawa
 		end
+
 	end
 
 	private
