@@ -17,9 +17,20 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+@import url(http://fonts.googleapis.com/css?family=Crafty+Girls);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+html,body {
+  	height:100%;
+}
+
 body { 
+
+	font-family: 'Montserrat', sans-serif;
+
 	font-size: 24px;
-	padding-top: 130px; 
+	color: white;
+	padding-top: 100px; 
 	// background: url('/assets/stonework.jpg') center center cover no-repeat fixed;
   /* Location of the image */
   background-image: url('/assets/stonework.jpg');
@@ -43,15 +54,27 @@ body {
    position: relative;
 }
 
+.shadow {
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.32);
+}
+
+.navbar {
+	border-width: 0px;
+}
+
 .nav_bg {
 	height: 100px;
 	font-size: 25px;
 	background-image: url('/assets/rooflineLJ.jpg');	
-	// background-image: url('/assets/rooflineLaptop.jpg');	
-	/* Background image doesn't tile */
 	background-repeat: no-repeat;
 	background-size: cover;
 	width: 100%;
+}
+
+/* overriding bootstrap */
+.panel {
+	border-bottom: 1px solid transparent;
+	margin-bottom: 0px;
 }
 
 .avoid_brand {
@@ -74,8 +97,57 @@ a.link_override {
     }
 }
 
+.w100 {
+	margin: auto;
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 10px;	
+}
+
+.w85 {
+	margin: auto;
+	width: 85%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.tcenter {
+	text-align: center; 
+}
+
+.tright {
+	text-align: right;
+}
+
+.center_filefield {
+	margin: auto;
+	width: 280px;
+}
+
+.hcenter {
+	margin: auto;
+	width: 100%;
+}
+
+.wawa_stucco {
+	background-color: rgba(123,130,114,1);
+}
+
+.text_shad {
+	text-shadow: 1px 1px black;
+	// text-shadow: 1px 1px #ff0000;
+}
+
+.title_margin {
+	margin-right: 40px;
+}
+
+.text_right {
+	text-align: right;
+}
+
 .big_header {
-	font-size: 60px;
+	font-size: 55px;
 }
 
 .sidebar_text {
@@ -88,7 +160,8 @@ a.link_override {
 }
 
 .profile_top_padding {
-	margin-top: 40px; 
+	// margin-top: 40px; 
+	padding-top: 20px; 
 }
 
 .comment_byline {
@@ -108,6 +181,7 @@ a.link_override {
 	padding-left: 20px;
 	padding-top: 15px;
 }
+
 .blog-post {
 	padding: 5px;
 	padding-left: 20px;	
@@ -123,23 +197,37 @@ a.link_override {
 // 	background-color: gray;
 // }
 
+#main, #main>.row {
+	height: 100%;
+}
+
+#main>.row {
+    overflow-y: scroll;
+}
+
+#left {
+	height: 100%;
+}
+
 /*
  *  styling for google map element
  */
 #gmap {
-	width: 700px;
-	height: 400px;
+	// width: 700px;
+	// height: 400px;
 
-	// width:33.3333%;
- //    height:calc(100% - 0);
- //    position:absolute;
- //    right:16px;
- //    top:50px;
- //    bottom:0;
- //    overflow:hidden;
-
+	width: 33.3333%;
+	height: calc(100% - 0);
+	position: absolute;
+	right: 16px;
+	top: 50px;
+	bottom: 0;
+	overflow: hidden;
 }
+
 #gmap_show {
-	width: 300px;
-	height: 450px;
+	min-width: 300px;
+	min-height: 450px;
+	width: 85%;
+	height: calc(100% - 0);	
 }

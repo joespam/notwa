@@ -1,14 +1,20 @@
-<div class="container profile_top_padding">
-	<%= form_for @profile, url: user_profile_path(@user), :html => { :multipart => true } do |f| %>
+<div class="container wawa_stucco">
+<div class="container profile_top_padding wawa_stucco">
+	<div class="col-sm-9 col-sm-offset-2">
+		<h1><%= "#{current_user.username}" %></h1>
+	</div>
+		<%= form_for @profile, url: user_profile_path(@user), :html => { :multipart => true } do |f| %>
 		<div class="row">
 			<div class="col-sm-3">
-				<%if @profile.avatar %>
-					<%=  image_tag @profile.avatar.url(:thumb) %>
-					<br>
-					<%= f.label :Avatar, "Change Avatar" %>
-				<% else %>
-					<%=f.label :Avatar %>
-				<% end %>
+				<div class="tright">
+					<%if @profile.avatar %>
+						<%=  image_tag @profile.avatar.url(:thumb) %>
+						<br>
+						<%= f.label :Avatar, "Change Avatar" %>
+					<% else %>
+						<%=f.label :Avatar %>
+					<% end %>
+				</div>
 				<%= f.file_field :avatar, :class => "form-control" %>
 			</div>
 			<div class="col-sm-9">
@@ -47,4 +53,5 @@
 			</div>
 		</div>
 	<% end %>
+</div>
 </div>

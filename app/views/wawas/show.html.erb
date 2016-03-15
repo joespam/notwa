@@ -1,80 +1,82 @@
-<div class="container">
+<div class="container wawa_stucco">
 
-<h1 class="blog-title crimson avoid_brand"><%= "#{@wawa.city}, #{@wawa.state} #{@wawa.zip}" %></h1>
+	<h1 class="tcenter crimson text_shad">
+		<%= "#{@wawa.city}, #{@wawa.state} #{@wawa.zip}" %>
+	</h1>
+	<hr class="w85">
+
 	<div class="row">
-
-		<div class="col-sm-8 blog-main">
-			<div class="row">
-			   <div class="col-sm-10">   
-					<%= image_tag @wawa.prime_photo.url(:large) %>
-					<% if current_user && current_user.admin || current_user && current_user == @wawa.user_id%>
-						<%= link_to "edit this wawa", edit_wawa_path(@wawa.id), class: "btn btn-default", type: "button" %>
-					<% end %>
-				<% if current_user && @comments && @comments.length > 0 %>
-					<%= link_to "Comment", "#add_comment_lb", class: "fancybox btn btn-default" %>
+		<div class="col-sm-6">
+			<%= image_tag @wawa.prime_photo.url(:large) %>
+			<div class="row hcenter">
+				<% if @wawa.info && @wawa.info != "" %>
+					<div class="row">
+						<h2 class="crimson text_shad"> Additional Info:</h2>
+						<p class="text_shad"><%= @wawa.info %></p>
+						<hr>
+					</div>
 				<% end %>
-				</div>
-				
-				<div class="col-sm-2">
-				   <div id="gmap_show"></div>
+				<div class="row hcenter">
+					<% if current_user && current_user.admin || current_user && current_user == @wawa.user_id%>
+							<%= link_to "edit this wawa", edit_wawa_path(@wawa.id), class: "btn btn-default w100", type: "button" %>
+					<% end %>
+					<% if current_user && @comments && @comments.length > 0 %>
+							<%= link_to "Comment", "#add_comment_lb", class: "fancybox btn btn-danger w100" %>
+					<% end %>
 				</div>
 			</div>
-			<% if @wawa.info && @wawa.info != "" %>
-				<div class="row">
-					<h2 class="crimson"> Additional Info:</h2>
-					<p><%= @wawa.info %></p>
-					<hr>
-				</div>
-			<% end %>
-			<h2 class="crimson">Comments</h2>
+		</div>
+		<div class="col-sm-6">
+		   <div class="hcenter" id="gmap_show"></div>
+		</div>
+	</div>
+	<hr>
+	<h2 class="crimson text_shad tcenter">Comments</h2>
+	<div class="row">
+		<div class="col-xs-12">
 			<% if @comments && @comments.length > 0 %>
 				<% @comments.each_with_index do |comment, index| %>
+		<div class="row">
 
-					<% if index%2 > 0 %>
-						<div class="blog-post bordered">
-					<% else %>
-						 <div class="blog-post">
-					<% end %> 
-						<div class="row">
-
-							<% if current_user && current_user.id == comment.user_id || current_user && current_user.admin %>
-								<div class="col-sm-3">
-									<p><%= link_to "Revise This Comment", "#edit_comment_#{comment.id}_lb", class: "fancybox btn btn-default comment_btn" %></p>
-								</div>
-
-								<!-- lightbox for editing this comment -->
-								<div style="display:none;">
-									<div id=<%="edit_comment_#{comment.id}_lb"%> >
-										<%= form_for comment, url: update_comment_path(comment.id), html: {method: :patch} do |f| %>
-											<p>
-												<%= f.label :body, "Edit Your Comment!" %>
-												<%= f.text_area :body, size: '50x20', :class => "form-control" %>
-											</p><p>
-												<%= f.submit "Edit Comment!", :class => "btn btn-lg btn-primary btn-block" %>
-											</p>
-										<% end %>
-									</div>
-								</div>
-							<% end %>
-							
-							<div class="col-sm-9">
-								<p class="comment_byline">
-									<%= "#{comment.updated_at.strftime("%d/%m/%Y %H:%M")}"%> by <strong><%= comment_username comment %></strong>
-									<%if comment.user.profile.avatar %>
-										<%=  image_tag comment.user.profile.avatar.url(:tiny) %>
-									<% end %>
-								</p>
-								<hr>
-								<p><%= comment.body %></p>
-							</div>
+					<hr>
+					<% if current_user && current_user.id == comment.user_id || current_user && current_user.admin %>
+						<div class="col-sm-3">
+							<p><%= link_to "Revise This Comment", "#edit_comment_#{comment.id}_lb", class: "fancybox btn btn-default comment_btn" %></p>
 						</div>
-					</div>       <!-- end of blog-post or bordered -->
+
+						<!-- lightbox for editing this comment -->
+						<div style="display:none;">
+							<div id=<%="edit_comment_#{comment.id}_lb"%> >
+								<%= form_for comment, url: update_comment_path(comment.id), html: {method: :patch} do |f| %>
+									<p>
+										<%= f.label :body, "Edit Your Comment!" %>
+										<%= f.text_area :body, size: '50x20', :class => "form-control" %>
+									</p><p>
+										<%= f.submit "Edit Comment!", :class => "btn btn-lg btn-primary btn-block" %>
+									</p>
+								<% end %> <!-- end form -->
+							</div> <!-- end comment div -->
+						</div> <!-- fancybox div -->
+					<% end %>
+							
+					<div class="col-sm-9">
+						<p class="comment_byline text_shad">
+							<%= "#{comment.updated_at.strftime("%d/%m/%Y %H:%M")}"%> by <strong><%= comment_username comment %></strong>
+							<%if comment.user.profile.avatar %>
+								<%=  image_tag comment.user.profile.avatar.url(:tiny) %>
+							<% end %>
+						</p>
+						<hr>
+						<p class="text_shad"><%= comment.body %></p>
+					</div>
+		</div> <!-- row -->
+
 				<% end %> <!-- end of comments.each -->
 			<% else %>
-				<%= link_to "Be the First to Comment!", "#add_comment_lb", class: "fancybox btn btn-default" %>
+				<%= link_to "Be the First to Comment!", "#add_comment_lb", class: "fancybox btn btn-default text_shad" %>
 			<% end %> <!-- end if comments -->
-
 		</div> <!-- column -->
+	</div> <!-- row -->
 
 	<!-- lightbox for adding new comments -->
 	<% if current_user %>	
@@ -93,52 +95,59 @@
 	<% end %>
 </div> <!-- container -->
 
-	<!-- script for adding google map -->
-	<script type="text/javascript">
+<!-- script for adding google map -->
+<script type="text/javascript">
 
-		handler = Gmaps.build('Google');
-		handler.buildMap({
-				provider: {
-					disableDefaultUI: false,
-					// pass in other Google Maps API options here
-				},
-				internal: {
-					id: 'gmap_show'
-				}
+	handler = Gmaps.build('Google');
+	handler.buildMap({
+			provider: {
+				disableDefaultUI: false,
+				// pass in other Google Maps API options here
 			},
-			function(){
-				markers = handler.addMarkers(<%=raw @hash.to_json %>);
-				handler.bounds.extendWith(markers);
-				handler.fitMapToBounds();
-				handler.getMap().setZoom(17);
+			internal: {
+				id: 'gmap_show'
 			}
-		);
-		// connect the search box to a google maps search box
-		//
-		var searchBox = new google.maps.places.SearchBox(document.getElementById('mapsearch'));
-		// var searchBox = new google.maps.places.SearchBox($('#mapsearch'));
+		},
+		function(){
+			markers = handler.addMarkers(<%=raw @hash.to_json %>);
+			handler.bounds.extendWith(markers);
+			handler.fitMapToBounds();
+			handler.getMap().setZoom(17);
+		}
+	);
 
-		// place change event on search box
-		google.maps.event.addListener(searchBox, 'places_changed', function() {
+	// listen for the window resize event & trigger Google Maps to update too
+	$(window).resize(function() {
+	// (the 'map' here is the result of the created 'var map = ...' above)
+		google.maps.event.trigger(map, "resize");
+	});
+	
+	// connect the search box to a google maps search box
+	//
+	var searchBox = new google.maps.places.SearchBox(document.getElementById('mapsearch'));
+	// var searchBox = new google.maps.places.SearchBox($('#mapsearch'));
 
-			console.log("testlistener");
+	// place change event on search box
+	google.maps.event.addListener(searchBox, 'places_changed', function() {
 
-			// console.log(searchBox.getPlaces());
-			var places = searchBox.getPlaces();
+		console.log("testlistener");
 
-			// bound
-			var bounds = new google.maps.LatLngBounds();
-			var i, place;
+		// console.log(searchBox.getPlaces());
+		var places = searchBox.getPlaces();
 
-			for (i=0; place=places[i];i++){
+		// bound
+		var bounds = new google.maps.LatLngBounds();
+		var i, place;
 
-				// console.log(place.geometry.location);
+		for (i=0; place=places[i];i++){
 
-				bounds.extend(place.geometry.location);
-				//marker.setPosition(place.geometry.location);
-			};
-			map.fitBounds(bounds); //fit to the bound
-			map.setZoom(15); // set zoom
-		});
-	</script>
+			// console.log(place.geometry.location);
+
+			bounds.extend(place.geometry.location);
+			//marker.setPosition(place.geometry.location);
+		};
+		map.fitBounds(bounds); //fit to the bound
+		map.setZoom(15); // set zoom
+	});
+</script>
 

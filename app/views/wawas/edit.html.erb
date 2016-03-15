@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container wawa_stucco">
 
-	<h1 class="blog-title crimson avoid_brand">Edit NotWa <%= "#{@wawa.city}, #{@wawa.state} #{@wawa.zip}"%></h1>
-	<div class="row">
-		<div class="col-sm-10 blog-main">
+	<h1 class="blog-title crimson avoid_brand text_shad tcenter">Edit NotWa <%= "#{@wawa.city}, #{@wawa.state} #{@wawa.zip}"%></h1>
+	<div class="row text_shad">
+		<div class="col-sm-12 blog-main">
 
 		<% if current_user %>
 			<% if current_user.admin %>
@@ -10,24 +10,25 @@
 				<%= form_for @wawa, :url => wawa_path(@wawa), :html => { :multipart => true } do |f| %>
 					<div class="row">
 						<div class="col-sm-4">   
-							<% if @wawa.prime_photo.exists? %>
-								<%= image_tag @wawa.prime_photo.url(:medium) %>
-							<% end %>
-							<% if true || current_user == @wawa.user.id %>
-								<p>		
-									<%=f.label :Prime_Photo, "Change photo" %>
-									<%= f.file_field :prime_photo %>			
-								</p>					
-							<% end %>
-							<%=f.label :info, "Additional Info" %>
-							<%= f.text_area :info, :class => "form-control" %>
+							<div class="hcenter">
+								<% if @wawa.prime_photo.exists? %>
+									<%= image_tag @wawa.prime_photo.url(:medium) %>
+								<% end %>
+								<% if true || current_user == @wawa.user.id %>
+									<p>		
+										<%=f.label :Prime_Photo, "Change photo" %>
+										<%= f.file_field :prime_photo %>			
+									</p>					
+								<% end %>
+								<%=f.label :info, "Additional Info" %>
+								<%= f.text_area :info, :class => "form-control" %>
+							</div>
 						</div>
-
 						<div class="col-sm-8">
-							<div id="gmap"></div>
+							<div class="hcenter" id="gmap_show"></div>
 						</div>
 					</div>
-					<div class="row">					
+					<div class="row w100">					
 						<div class="col-sm-6">
 						<%=f.label :Latitude %>
 						<%=f.text_field :lat, :class => "form-control" %>
@@ -71,11 +72,16 @@
 		var defaultLng = parseFloat($('#wawa_long').val());
 		var myCoordsLength = 8;
 
-		var map = new google.maps.Map(document.getElementById('gmap'), {
+		var map = new google.maps.Map(document.getElementById('gmap_show'), {
 			zoom: myZoom,
 			center: new google.maps.LatLng(defaultLat, defaultLng),
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		});
+
+		// listen for the window resize event & trigger Google Maps to update too
+	  $(window).resize(function() {
+	    google.maps.event.trigger(map, "resize");
+	  });
 
 		// creates a draggable marker to the given coords
 
