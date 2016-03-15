@@ -1,89 +1,58 @@
-<div class="container">
-
-	   <div class="blog-header">
-	     <p class="lead blog-description">
-	     <h1 class="avoid_brand big_header">Hey, that used to be a Wawa!</h1>
-	     </p>
-	     <% if !current_user %>
-	        <p class="avoid_brand">Did we miss one? Sign up and add it!</p>
-	     <% end %>
-	   </div>
-
+<div id="gmap"></div>
+<div class="container-fluid" id="main">
 	<div class="row">
+		<div class="col-xs-8" id="left">
 
-		<div class="col-sm-8 blog-main">
+			<div class="title_margin">
+				<h1 class="big_header text_shad text_right">Hey, that used to be a Wawa!</h1>
 
-			<div class="blog-post">
-			   <div id="gmap"></div>
+				<% if !current_user %>
+				  <p class="text_shad text_right">Did we miss one? Sign up and add it!</p>
+				<% end %>
 			</div>
+
 			<% @wawas.each_with_index do |wawa, index| %>
 
-				<% if index%2 > 0 %>
-					<div class="blog-post bordered">
-				<% else %>
-					 <div class="blog-post">
-				<% end %> 
-
-					<%  if wawa.prime_photo.exists? %>
-						<%=  link_to "#{image_tag wawa.prime_photo.url(:thumb)}".html_safe, wawa_path(wawa.id) %>
-					<% else %>
-						<%= link_to "Picture Unavailable - click here to see this NotWa's page", wawa_path(wawa.id), class: "btn btn-default" %>
-					<% end %>
-
-		         <h2 class="blog-post-title crimson"><%= "#{wawa.city}, #{wawa.state} #{wawa.zip}" %></h2>
-					<p class="blog-post-meta">
-						Submitted by <%= "#{wawa.user.username}"%>
-						<%if wawa.user.profile %>
-							<% if wawa.user.profile.avatar %>
-								<%=  image_tag wawa.user.profile.avatar.url(:tiny) %>
-							<% end %>
-						<% end %>
-						<br>
-						<%="Last Updated on #{wawa.updated_at.strftime("%d/%m/%Y %H:%M")}"%>
-					</p>
-
-					<% if current_user && current_user == wawa.user || current_user && current_user.admin %>
-						<div class="profilebox">
-							<%= link_to "Edit wawa", edit_wawa_path(wawa.id), class: "btn btn-default" %>
+				<div class="panel panel-default wawa_stucco">
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="panel-heading">
+								<%  if wawa.prime_photo.exists? %>
+									<%=  link_to "#{image_tag wawa.prime_photo.url(:medium)}".html_safe, wawa_path(wawa.id) %>
+								<% else %>
+									<%= link_to "Picture Unavailable - click here to see this NotWa's page", wawa_path(wawa.id), class: "btn btn-default" %>
+								<% end %>
+							</div>
 						</div>
-					<% end %>
-				</div> <!-- .blog-post  -->
-			<% end %>
+						<div class="col-xs-8">
+					         <h2 class="blog-post-title text_shad crimson"><%= "#{wawa.city}, #{wawa.state} #{wawa.zip}" %></h2>
+								<p class="blog-post-meta text_shad">
+									<% if current_user && current_user == wawa.user || current_user && current_user.admin %>
+										<span class="profilebox">
+											<%= link_to "Edit wawa", edit_wawa_path(wawa.id), class: "btn btn-sm btn-danger" %>
+										</span>
+									<% end %>
+									Submitted by <%= "#{wawa.user.username}"%>
+									<%if wawa.user.profile %>
+										<% if wawa.user.profile.avatar %>
+											<%=  image_tag wawa.user.profile.avatar.url(:tiny) %>
+										<% end %>
+									<% end %>
+									<br>
+									<%="Last Updated on #{wawa.updated_at.strftime("%d/%m/%Y %H:%M")}"%>
+								</p>
+						</div>
+					</div>
+				</div> <!-- panel-default  -->
 
-<!-- make this work in future revs
-			<nav>
-				<ul class="pager">
-				  <li><a href="#">Previous</a></li>
-				  <li><a href="#">Next</a></li>
-				</ul>
-			</nav>
- -->
-		</div><!-- /.blog-main -->
-
-		<div class="col-sm-4 blog-sidebar">
-	          <div class="sidebar-module sidebar-module-inset">
-	            <h3 class="sidebar_text">About</h3>
-	            <p>Wawa Markets was founded in 1964. Many individual markets have come and gone over the years, leaving their distinctive Wawa storefront behind for anyone to see. A Notwa is one of those 'used-to-be-a-wawa's. Once you notice one, you'll see them everywhere!</p>
-	          </div>
-	          <div class="sidebar-module">
-	            <h3 class="sidebar_text">Archives</h3>
-	            <ol class="list-unstyled">
-	              <li><a href="#">January 2016</a></li>
-	            </ol>
-	          </div>
-	          <div class="sidebar-module">
-	            <h3 class="sidebar_text">Elsewhere</h3>
-	            <ol class="list-unstyled">
-	              <li><a href="https://www.wawa.com">Wawa</a></li>
-	              <li><a href="https://www.Twitter.com">Twitter</a></li>
-	              <li><a href="https://www.Facebook.com">Facebook</a></li>
-	            </ol>
-	          </div>
-		</div><!-- /.blog-sidebar -->
+			<% end %> 	<!-- wawas.each -->
+	   </div>	<!-- col-xs-8 -->
+		<div class="col-xs-4">
+			<!--map-canvas will be postioned here-->
+		</div>
 
 	</div><!-- /.row -->
-
-</div><!-- /.container -->
+</div><!-- /.container-fluid -->
 
 <!--  -->
 <script type="text/javascript">

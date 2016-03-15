@@ -1,6 +1,9 @@
 <div class="container">
+	<div class="col-sm-9 col-sm-offset-2">
+		<h1><%= "#{current_user.username}" %></h1>
+	</div>
 	<%= form_for @profile, url: user_profile_path(@user), :html => { :multipart => true } do |f| %>
-		<div class="row">
+		<div class="row wawa_stucco">
 			<div class="col-sm-3">
 				<%if @profile.avatar %>
 					<%=  image_tag @profile.avatar.url(:thumb) %>

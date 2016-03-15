@@ -28,9 +28,12 @@ class WawasController < ApplicationController
 	# we can based on the information we do have
 	#
 	def geofill wawa
+
+		# clone parameter wawa to see if we need to save before exiting
+		changed = wawa.clone
+
 		# if no lat/long, but there is a pic
 		# attempt to extract latlong data from pic
-		# 
 		if wawa.lat.nil? && wawa.prime_photo_file_name
 			wawa.set_latlong_from_pic
 		end
@@ -38,14 +41,12 @@ class WawasController < ApplicationController
 		if wawa.lat && wawa.street1.nil? || wawa.street1 == "" 
 			# if lat lon has been set but there's no address
 			# get a street address from latlong
-			#
 			if !wawa.lat.nil?
 				wawa.latlong_to_address
 			end
 		elsif !wawa.street1.nil? || wawa.street1 != "" 			
 			# if street address is set and latlon isn't
 			# do a reverse geocode and set latlong
-			# 
 			if wawa.lat.nil? 
 
 				address = "#{wawa.street1}, #{wawa.city}, #{wawa.state}, #{wawa.zip}"
@@ -57,14 +58,17 @@ class WawasController < ApplicationController
 			end
 		else
 			# if all else fails, default the location to philadelphia city center
-			#
 			wawa.lat = 39.9523400
 			wawa.long = -75.1637900
+			if wawa.street1.nil? || wawa.street1 == ""
+				wawa.latlong_to_address
+			end
 		end
 
-		# make any changes permanent
-		wawa.save
-
+		# if needed, make any changes permanent
+		if wawa != changed
+			wawa.save
+		end
 	end
 
 	helper_method :comments, :comment_username, :geofill
@@ -113,10 +117,10 @@ class WawasController < ApplicationController
 	end
 
 	def index
-		# this array should be sorted, or queried from the DB
-		# in order of most recently added
+		# 
+		# get wawas in order of most recently added
 		#
-		@wawas = Wawa.all
+		@wawas = Wawa.all.order("created_at DESC")
 		@hash = Gmaps4rails.build_markers(@wawas) do |wawa, marker|
 			wawa_link = view_context.link_to "show me!", wawa_path(wawa.id)
 			marker.infowindow "<h4><u>#{wawa_link}</u></h4>"

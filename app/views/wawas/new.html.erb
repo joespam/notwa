@@ -1,37 +1,35 @@
-<div class="container">
+<div class="container wawa_stucco">
 
-	<h1 class="blog-title">What? One's missing from our database? Fix that!</h1>
+	<h1 class="tcenter">What? One's missing from our database? Fix that!</h1>
+	<hr class="w85">
 
 	<%= form_for @wawa, :html => { :multipart => true } do |f| %>
 		<div class="row">
-			<div class="col-sm-2 blog-main">
-				<h2>Upload Its Picture!</h2>
-				<hr>
-				<p>
-					<%= f.hidden_field :user_id, value: params[:user_id] %>
-					<%= hidden_field_tag 'selected', 'none'  %>
-
-					<%=f.label :prime_photo, "Add Photo" %>
-					<%= f.file_field :prime_photo %>
-				</p>
+			<div class="col-xs-5 tright">
+				<%= f.hidden_field :user_id, value: params[:user_id] %>
+				<%= hidden_field_tag 'selected', 'none'  %>
+				<%= f.label :prime_photo, "Add Photo : " %>
 			</div>
-			<div class="col-sm-10 blog-main">
-				<h2>Drag the Marker to this Wawa's Location</h1>
-				<div id="gmap"></div>
+			<div class="col-xs-7">
+				<%= f.file_field :prime_photo %>
 			</div>
 		</div>
+		<hr class="w85">
 		<div class="row">
-			<div class="col-sm-9 col-sm-offset-1 blog-main">
+			<h2 class="tcenter">Drag the Marker to this Wawa's Location</h2>
+			<div class="hcenter" id="gmap_show"></div>
+		</div>
+		<div class="row hcenter tcenter">
 			<br>
-			<p>
-					<%=f.label :info, 'Additional Info:' %>
-				</p><p>
-					<%= f.hidden_field :lat %>
-					<%= f.hidden_field :long %>
-					<%= f.text_area :info, :class => "form-control additional-info", :placeholder => "We'll figure out the street address for your Notwa from the Map. Go ahead and add any other interesting information here, or wait and add a comment on the next page." %>
-				</p><p>
-					<%= f.submit :Add!, :class => "btn btn-lg btn-primary btn-block" %>
-				</p>
+			<p class="w85">
+				<%= f.label :info, 'Additional Info:' %>
+			</p><p class="w85">
+				<%= f.hidden_field :lat %>
+				<%= f.hidden_field :long %>
+				<%= f.text_area :info, :class => "form-control additional-info", :placeholder => "We'll figure out the street address for your Notwa from the Map. Go ahead and add any other interesting information here, or wait and add a comment on the next page." %>
+			</p><p class="w85">
+				<%= f.submit :Add!, :class => "btn btn-lg btn-primary btn-block" %>
+			</p>
 		</div> <!-- row -->
 	<% end %>
 </div>
@@ -43,11 +41,16 @@
 	var defaultLng = -75.1637900;
 	var myCoordsLength = 8;
 
-	var map = new google.maps.Map(document.getElementById('gmap'), {
+	var map = new google.maps.Map(document.getElementById('gmap_show'), {
 		zoom: myZoom,
 		center: new google.maps.LatLng(defaultLat, defaultLng),
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
+
+	// listen for the window resize event & trigger Google Maps to update too
+  $(window).resize(function() {
+    google.maps.event.trigger(map, "resize");
+  });
 
 	// creates a draggable marker to the given coords
 
